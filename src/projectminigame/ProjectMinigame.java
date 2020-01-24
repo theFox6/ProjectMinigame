@@ -5,6 +5,9 @@
  */
 package projectminigame;
 
+import GameEngine.PrintingGame;
+import Games.RPS;
+
 /**
  *
  * @author JFuchs
@@ -15,7 +18,11 @@ public class ProjectMinigame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        PrintingGame game = new RPS(System.out);
+        
+        System.out.println(game.name);
+        System.out.println("---------------------------------");
+        game.run();
     }
     
 }
