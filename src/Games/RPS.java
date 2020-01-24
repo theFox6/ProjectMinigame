@@ -2,10 +2,11 @@ package Games;
 
 import GameEngine.PrintingGame;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class RPS extends PrintingGame {
-    public RPS(PrintStream out) {
-        super("Schere Stein Papier", out);
+    public RPS(PrintStream out, Scanner in) {
+        super("Schere Stein Papier", out, in);
     }
     
     @Override

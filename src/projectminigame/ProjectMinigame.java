@@ -5,8 +5,7 @@
  */
 package projectminigame;
 
-import GameEngine.PrintingGame;
-import Games.RPS;
+import java.util.Scanner;
 
 /**
  *
@@ -18,11 +17,8 @@ public class ProjectMinigame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PrintingGame game = new RPS(System.out);
-        
-        System.out.println(game.name);
-        System.out.println("---------------------------------");
-        game.run();
+        Scanner in = new Scanner(System.in);
+        Menu.runStream(System.out, in);
     }
     
 }
