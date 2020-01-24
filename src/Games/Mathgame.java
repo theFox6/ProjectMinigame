@@ -5,8 +5,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Mathgame extends PrintingGame {
-    public Mathgame(PrintStream out) {
-        super("Kopfrechnen", out);
+    public Mathgame(PrintStream out, Scanner in) {
+        super("Kopfrechnen", out, in);
         
     }
     
@@ -16,7 +16,6 @@ public class Mathgame extends PrintingGame {
         p("Willkommen beim Kopfrechnen. Es werden einfache Aufgaben der Grundrechenarten gegeben, die du lösen musst.");
         p("");
         
-        Scanner scan = new Scanner(System.in);
         int eingabe;
         int anzahl = 0;
         
@@ -25,12 +24,12 @@ public class Mathgame extends PrintingGame {
             int zahl1 = (int) (Math.random() * 100) + 1;
             int zahl2 = (int) (Math.random() * 100) + 1;
             text.print(zahl1 + "+" + zahl2 + "=");
-            eingabe = scan.nextInt();
+            eingabe = input.nextInt();
             if (eingabe == zahl1 + zahl2) {
                 
             }
             else {
-                p("Das ist falsch. Richtig wäre " + (zahl1+zahl2) + " Du hast " + (anzahl-1) + " mal richtig gerechnet.");
+                p("Das ist falsch. Richtig wäre " + (zahl1+zahl2) + ". Du hast " + (anzahl-1) + " mal richtig gerechnet.");
                 return;
             }
         }
