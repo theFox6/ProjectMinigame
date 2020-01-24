@@ -5,11 +5,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class RPS extends PrintingGame {
-
-    Scanner scan = new Scanner(System.in);
-
-    public RPS(PrintStream out) {
-        super("Schere Stein Papier", out);
+    public RPS(PrintStream out, Scanner in) {
+        super("Schere Stein Papier", out, in);
     }
 
     @Override
@@ -19,7 +16,7 @@ public class RPS extends PrintingGame {
         p("Für Stein: 2");
         p("Für Papier: 3");
         p("Wählen Sie eine der Folgenenden Optionen");
-        int opt = scan.nextInt();
+        int opt = input.nextInt();
         
         // zufällige Auswahl des Com Spielers
         int zufall = (int) Math.round(Math.random() * 3) + 1;
