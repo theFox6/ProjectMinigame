@@ -6,7 +6,7 @@
 package projectminigame;
 
 import GameEngine.PrintingGame;
-import Games.RPS;
+import Games.Mathgame;
 
 /**
  *
@@ -18,7 +18,7 @@ public class ProjectMinigame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PrintingGame game = new RPS(System.out);
+        PrintingGame game = new Mathgame(System.out);
         
         System.out.println(game.name);
         System.out.println("---------------------------------");
