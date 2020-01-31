@@ -27,7 +27,7 @@ public class ProjectMinigame extends JFrame implements Runnable {
     
     @Override
     public void run() {
-        Menu.runStream(pta.output, pta.input);
+        new Menu(pta.output, pta.input).runStream();
         dispose();
     }
 

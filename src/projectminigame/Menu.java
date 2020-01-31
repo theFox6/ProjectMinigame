@@ -6,7 +6,48 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Menu {
-    public static int MenuFromStream(PrintingGame[] games, PrintStream out, Scanner in) {
+    private final PrintStream out;
+    private final Scanner in;
+    PrintingGame[] games;
+    
+    public Menu(PrintStream out, Scanner in) {
+        this.out = out;
+        this.in = in;
+        PrintingGame[] g = {new QuitOption(out,in), new RPS(out,in)};
+        games = g;
+    }
+    
+    public static boolean truthyAnswer(String ans) {
+        switch (ans) {
+            case "j":
+            case "ja":
+            case "y":
+            case "yes":
+                return true;
+            case "n":
+            case "nein":
+            case "no":
+            default:
+                return false;
+        }
+    }
+    
+    public boolean beenden;
+    private class QuitOption extends PrintingGame {
+        public QuitOption(PrintStream out, Scanner in) {
+            super("Minigame Sammlung schließen",out,in);
+            replayable = false;
+        }
+
+        @Override
+        public void run() {
+            text.println("Wirklich beenden? (j/n)");
+            String c = input.next();
+            beenden = truthyAnswer(c);
+        }
+    }
+    
+    public int MenuFromStream() {
         out.println("Menü");
         out.println();
         int i = 0;
@@ -17,30 +58,25 @@ public class Menu {
         return choice;
     }
     
-    public static void runStream(PrintStream out, Scanner in) {
-        PrintingGame[] games = {new RPS(out,in)};
+    public void runStream() {
         boolean playOn;
-        int choice = MenuFromStream(games, out, in);
-        PrintingGame game = games[choice];
-        
         do {
-            out.println(game.name);
-            out.println();
-            game.run();
-            
-            out.println();
-            out.println("nocheinmal spielen? (j/n)");
-            String c = in.next();
-            switch (c) {
-                case "j":
-                case "y":
-                    playOn = true;
-                break;
-                case "n":
-                default:
-                    playOn = false;
-                break;
-            }
-        } while (playOn);
+            int choice = MenuFromStream();
+            PrintingGame game = games[choice];
+            do {
+                out.println(game.name);
+                out.println();
+                game.run();
+
+                if (game.replayable) {
+                    out.println();
+                    out.println("Nocheinmal spielen? (j/n)");
+                    String c = in.next();
+                    playOn = truthyAnswer(c);
+                } else {
+                   playOn = false;
+                }
+            } while (playOn);
+        } while (!beenden);
     }
 }
