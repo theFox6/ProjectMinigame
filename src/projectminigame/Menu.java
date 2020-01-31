@@ -2,6 +2,7 @@ package projectminigame;
 
 import GameEngine.PrintingGame;
 import Games.RPS;
+import Games.TTT;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class Menu {
     }
     
     public static void runStream(PrintStream out, Scanner in) {
-        PrintingGame[] games = {new RPS(out,in)};
+        PrintingGame[] games = {new RPS(out,in),new TTT(out,in)};
         boolean playOn = true;
         int choice = MenuFromStream(games, out, in);
         PrintingGame game = games[choice];
