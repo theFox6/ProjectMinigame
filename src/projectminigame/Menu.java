@@ -30,7 +30,7 @@ public class Menu {
             game.run();
             
             out.println();
-            out.println("nocheinmal spielen? (j/n)");
+            out.println("Nocheinmal spielen? (j/n)");
             String c = in.next();
             switch (c) {
                 case "j":
