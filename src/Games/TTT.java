@@ -127,11 +127,7 @@ public class TTT extends PrintingGame {
             }
             //Tauschen der Spieler
             if (s == true) {
-                if (player1 == true) {
-                    player1 = false;
-                } else if (player1 == false) {
-                    player1 = true;
-                }
+                player1 = !player1;
             }
             //Kontrolle Sieg
            for (int i = 0; i < 5; i=i+2) {
