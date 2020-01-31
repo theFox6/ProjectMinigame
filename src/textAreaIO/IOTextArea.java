@@ -1,5 +1,6 @@
 package textAreaIO;
 
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Queue;
@@ -21,6 +22,7 @@ public class IOTextArea extends JTextArea {
 	 */
 	public IOTextArea() {
 		super();
+                setFont(new Font(Font.MONOSPACED,Font.PLAIN,16));
 		setEditable(false);
 		setUpKeyListener();
 	}

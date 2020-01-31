@@ -5,6 +5,8 @@
  */
 package projectminigame;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import textAreaIO.PrintingTextArea;
@@ -22,6 +24,12 @@ public class ProjectMinigame extends JFrame implements Runnable {
         pack();
         setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addWindowStateListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.exit(0);
+            }
+        });
         setVisible(true);
     }
     
