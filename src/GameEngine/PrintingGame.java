@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public abstract class PrintingGame implements Runnable {
+    public boolean replayable = true;
     public final String name;
     protected PrintStream text;
     protected Scanner input;
