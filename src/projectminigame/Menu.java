@@ -19,7 +19,7 @@ public class Menu {
     
     public static void runStream(PrintStream out, Scanner in) {
         PrintingGame[] games = {new RPS(out,in)};
-        boolean playOn = true;
+        boolean playOn;
         int choice = MenuFromStream(games, out, in);
         PrintingGame game = games[choice];
         
