@@ -5,20 +5,45 @@
  */
 package projectminigame;
 
-import java.util.Scanner;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import textAreaIO.PrintingTextArea;
 
 /**
  *
  * @author JFuchs
  */
-public class ProjectMinigame {
+public class ProjectMinigame extends JFrame implements Runnable {
+    
+    private final PrintingTextArea pta = new PrintingTextArea();
+    
+    public ProjectMinigame() {
+        add(new JScrollPane(pta));
+        pack();
+        setExtendedState(MAXIMIZED_BOTH);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addWindowStateListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        setVisible(true);
+    }
+    
+    @Override
+    public void run() {
+        new Menu(pta.output, pta.input).runStream();
+        dispose();
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        Menu.runStream(System.out, in);
+        new ProjectMinigame().run();
     }
     
 }
