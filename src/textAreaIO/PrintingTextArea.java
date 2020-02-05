@@ -18,28 +18,26 @@ public class PrintingTextArea extends IOTextArea implements Closeable {
 	/**
 	 * a scanner to receive user inputs from the text area
 	 */
-	public final Scanner input = new Scanner((CharBuffer cb) -> {
-            try {
-                Latch reading = new Latch(true);
-                readln((l) -> {cb.put(l); reading.reset();});
-                while (reading.state())
-                    Thread.sleep(100);
-                //re-add the newline
-                cb.append((char) 10);
-                return cb.length();
-            } catch (InterruptedException ex) {
-                throw new IOException(ex);
-            }
-        });
+	public final Scanner input = new Scanner(new Readable() {
+		public int read(CharBuffer cb) throws IOException {
+			String text;
+			try {
+				text = readln();
+			} catch (InterruptedException e) {
+				throw new IOException("reading interrupted",e);
+			}
+			cb.put(text);
+			return text.length();
+		}
+	});
 
 
 	/**
 	 * stop accepting outputs
-         * @throws java.io.IOException
 	 */
 	public void close() throws IOException {
-		output.close();
 		input.close();
+		output.close();
 	}
 
 
