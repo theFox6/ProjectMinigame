@@ -1,6 +1,7 @@
 package projectminigame;
 
 import GameEngine.PrintingGame;
+import Games.Mathgame;
 import Games.RPS;
 import Games.TTT;
 import java.io.PrintStream;
@@ -14,7 +15,12 @@ public class Menu {
     public Menu(PrintStream out, Scanner in) {
         this.out = out;
         this.in = in;
-        PrintingGame[] g = {new QuitOption(out,in), new RPS(out,in),new TTT(out,in)};
+        PrintingGame[] g = {
+            new QuitOption(out,in),
+            new RPS(out,in),
+            new TTT(out,in),
+            new Mathgame(out,in)
+        };
         games = g;
     }
     
