@@ -7,7 +7,8 @@ public class CharField {
     public Map<Short2DPoint,Character> map = new LinkedHashMap<>();
     
     public CharField() {}
-    public CharField(Character[][] init) {
+    
+    public void readArray(Character[][] init) {
         short x = 0;
         for (Character[] row : init) {
             short y = 0;
@@ -20,7 +21,7 @@ public class CharField {
     }
     
     public char get(Short2DPoint p) {
-        return map.get(p);
+        return map.getOrDefault(p,' ');
     }
     
     public char get(short x, short y) {
@@ -37,5 +38,16 @@ public class CharField {
     
     public void clear() {
         map.clear();
+    }
+    
+    public String toString(short x, short y, short width, short height) {
+        String str = "";
+        for (short yp = y; yp < y+height; yp++) {
+            for (short xp = x; xp < x+height; xp++) {
+                str = str + get(xp,yp);
+            }
+            str = str + "\n";
+        }
+        return str;
     }
 }
