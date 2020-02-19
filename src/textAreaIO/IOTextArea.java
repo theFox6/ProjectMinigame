@@ -1,5 +1,6 @@
 package textAreaIO;
 
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.LinkedTransferQueue;
@@ -28,6 +29,7 @@ public class IOTextArea extends JTextArea {
 			if (cpos < inputStart)
 				setCaretPosition(inputStart);
 		});
+                setFont(new Font(Font.MONOSPACED,Font.PLAIN,16));
 	}
 
 	private void setUpKeyListener() {
