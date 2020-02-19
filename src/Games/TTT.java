@@ -37,43 +37,28 @@ public class TTT extends PrintingGame {
                 XO = "O";
                 a = input.nextInt();
             }
+
             //Setzen von XO für pl1 u pl2
-            if (a >= 1 && a <= 3) {
-                a--;
-                if (" ".equals(Felder[0][a * 2])) {
-                    Felder[0][a * 2] = XO;
+            if (a < 0 && a > 9) {
+                p("Dieses Feld ist nicht existent");
+                s = false;
+            }
+            int n = 0, y;
+            for (y = a; y > 3; y = y - 3) {
+                n++;
+            }
+            y = y - (n * 3 + 1);
+            if (a >= 0 && a <= 9) {
+                if (" ".equals(Felder[n][y * 2])) {
+                    Felder[n][y * 2] = XO;
                     printBorder(Felder);
                 } else {
                     p("Dieses Feld ist belegt");
                     s = false;
                 }
-            }
-            else if (a >= 4 && a <= 6) {
-
-                a = a - 4;
-                if (" ".equals(Felder[2][a * 2])) {
-                    Felder[2][a * 2] = XO;
-                    printBorder(Felder);
-                } else {
-                    p("Dieses Feld ist belegt");
-                    s = false;
-                }
-
-            }
-            else if (a >= 7 && a <= 9) {
-                a = a - 7;
-                if (" ".equals(Felder[4][a * 2])) {
-                    Felder[4][a * 2] = XO;
-                    printBorder(Felder);
-                } else {
-                    p("Dieses Feld ist belegt");
-                    s = false;
-                }
-                
-            }
-            else {
-            p("Dieses Feld ist nicht existent");
-            s = false;
+            } else {
+                p("Dieses Feld ist nicht existent");
+                s = false;
             }
 
             //Tauschen der Spieler
