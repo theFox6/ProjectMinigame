@@ -15,7 +15,7 @@ public class TTT extends PrintingGame {
     public void run() {
         int a = 0;
         String XO = "";
-        boolean win = false, player1 = true, s;
+        boolean win = false, player1 = true, s, belegt=true;
         String[][] Felder = {
             {" ", "|", " ", "|", " "},
             {"-", "+", "-", "+", "-"},
@@ -85,7 +85,18 @@ public class TTT extends PrintingGame {
                 win = true;
                 p("Es gibt einen Sieger");
             }
-//Wenn alles belegt
+//wenn voll
+if (!win){
+belegt=true;
+  for (int i = 0; i < 5; i++) {
+         for (int z = 0; z < 5; z++) {
+               if(Felder)
+            }
+            p("");
+        }
+}
+
+
         }
     }
 
