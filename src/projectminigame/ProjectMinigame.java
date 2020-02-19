@@ -7,6 +7,8 @@ package projectminigame;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import textAreaIO.PrintingTextArea;
@@ -20,6 +22,7 @@ public class ProjectMinigame extends JFrame implements Runnable {
     private final PrintingTextArea pta = new PrintingTextArea();
     
     public ProjectMinigame() {
+        super("ProjectMinigame");
         add(new JScrollPane(pta));
         pack();
         setExtendedState(MAXIMIZED_BOTH);
@@ -30,6 +33,11 @@ public class ProjectMinigame extends JFrame implements Runnable {
                 System.exit(0);
             }
         });
+        try {
+            setIconImage(ImageIO.read(ProjectMinigame.class.getResource("Jcontroller.png")));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         setVisible(true);
     }
     
