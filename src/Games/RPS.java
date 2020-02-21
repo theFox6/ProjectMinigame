@@ -27,7 +27,7 @@ public class RPS extends PrintingGame {
                         p("Es ist unentschieden");
                         break;
                     case 2:
-                        p("Sie Haben gewonnen");
+                        p("Sie haben gewonnen");
                         break;
                     case 3:
                         p("Sie haben verloren");
@@ -41,13 +41,13 @@ public class RPS extends PrintingGame {
                 p("Der Com wählt Stein");
                 switch (opt) {
                     case 1:
-                        p("Sie haben Verloren");
+                        p("Sie haben verloren");
                         break;
                     case 2:
                         p("Es ist unentschieden");
                         break;
                     case 3:
-                        p("Sie haben Gewonnen");
+                        p("Sie haben gewonnen");
                         break;
                     default:
                         p("Sie haben eine falsche Option gewählt.");
@@ -58,10 +58,10 @@ public class RPS extends PrintingGame {
                 p("Der Com wählt Papier");
                 switch (opt) {
                     case 1:
-                        p("Sie haben Gewonnen");
+                        p("Sie haben gewonnen");
                         break;
                     case 2:
-                        p("Sie haben Gewonnen");
+                        p("Sie haben verloren");
                         break;
                     case 3:
                         p("Es ist unentschieden");
