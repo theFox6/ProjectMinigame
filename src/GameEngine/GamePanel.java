@@ -28,7 +28,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	// image
 	private BufferedImage image;
-	private Graphics2D g;
 
 	// game state manager
 	private GameStateManager gsm;
@@ -40,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		requestFocus();
 	}
 
+        @Override
 	public void addNotify() {
 		super.addNotify();
 		if (thread == null) {
@@ -50,18 +50,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	private void init() {
-
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		g = (Graphics2D) image.getGraphics();
-
 		running = true;
-
 		gsm = new GameStateManager();
-
 	}
 
 	public void run() {
-
 		init();
 
 		long start;
@@ -98,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	private void draw() {
-		gsm.paint(g);
+		gsm.paint(image.createGraphics());
 	}
 
 	private void drawToScreen() {

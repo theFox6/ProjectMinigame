@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameStateManager implements KeyListener,Paintable {
+    
+    public PaintingGame currentG;
+    public PrintingGame currentT;
 
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
