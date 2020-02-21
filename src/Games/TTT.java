@@ -15,7 +15,7 @@ public class TTT extends PrintingGame {
     public void run() {
         int a = 0;
         String XO = "";
-        boolean win = false, player1 = true, s, belegt=true;
+        boolean win = false, player1 = true, s, belegt=false;
         String[][] Felder = {
             {" ", "|", " ", "|", " "},
             {"-", "+", "-", "+", "-"},
@@ -24,7 +24,7 @@ public class TTT extends PrintingGame {
             {" ", "|", " ", "|", " "},};
         //Ausgabe vom Array
         printBorder(Felder);
-        while (!win) {
+        while (!win && !belegt) {
             s = true;
             if (player1 == true) {
                 p("Player 1 ist an der Reihe");
@@ -47,10 +47,10 @@ public class TTT extends PrintingGame {
             for (y = a; y > 3; y = y - 3) {
                 n++;
             }
-            y = y - (n * 3 + 1);
+            y = y - 1;
             if (a >= 0 && a <= 9) {
-                if (" ".equals(Felder[n][y * 2])) {
-                    Felder[n][y * 2] = XO;
+                if (" ".equals(Felder[n*2][y * 2])) {
+                    Felder[n*2][y * 2] = XO;
                     printBorder(Felder);
                 } else {
                     p("Dieses Feld ist belegt");
@@ -88,12 +88,17 @@ public class TTT extends PrintingGame {
 //wenn voll
 if (!win){
 belegt=true;
-  for (int i = 0; i < 5; i++) {
-         for (int z = 0; z < 5; z++) {
-               if(Felder)
+  for (int i = 0; i < 5; i= i+2) {
+         for (int z = 0; z < 5; z=z+2) {
+               if(Felder[i][z]==" "){
+               belegt = false;
+               break;
+               }
             }
-            p("");
         }
+  if (belegt){
+      p("Es gibt keinen Sieger");
+  }
 }
 
 
