@@ -24,36 +24,61 @@ public class RPS extends PrintingGame {
         // zufällige Auswahl des Com Spielers
         int zufall = (int) Math.round(Math.random() * 3) + 1;
         // Auswertung des Ergebnisses
-        if (zufall == 1) {
-            p("Der Com wählt Schere");
-            if (opt == 1) {
-                p("Es ist unentschieden");
-            } else if (opt == 2) {
-                p("Sie Haben gewonnen");
-            } else if (opt == 3) {
-                p("Sie haben verloren");
-            }
-        } else if (zufall == 2) {
-            p("Der Com wählt Stein");
-            if (opt == 1) {
-                p("Sie haben Verloren");
-            } else if (opt == 2) {
-                p("Es ist unentschieden");
-            } else if (opt == 3) {
-                p("Sie haben Gewonnen");
-            }
-        } else if (zufall == 3) {
-            p("Der Com wählt Papier");
-            if (opt == 1) {
-                p("Sie haben Gewonnen");
-            } else if (opt == 2) {
-                p("Sie haben Gewonnen");
-            } else if (opt == 3) {
-                p("Es ist unentschieden");
-            }
-        }
-           else {
-        p("Sie habe eine Falsche Option verwendet");
+        switch (zufall) {
+            case 1:
+                p("Der Com wählt Schere");
+                switch (opt) {
+                    case 1:
+                        p("Es ist unentschieden");
+                        break;
+                    case 2:
+                        p("Sie haben gewonnen");
+                        break;
+                    case 3:
+                        p("Sie haben verloren");
+                        break;
+                    default:
+                        p("Sie haben eine falsche Option gewählt.");
+                        break;
+                }
+            break;
+            case 2:
+                p("Der Com wählt Stein");
+                switch (opt) {
+                    case 1:
+                        p("Sie haben verloren");
+                        break;
+                    case 2:
+                        p("Es ist unentschieden");
+                        break;
+                    case 3:
+                        p("Sie haben gewonnen");
+                        break;
+                    default:
+                        p("Sie haben eine falsche Option gewählt.");
+                        break;
+                }
+            break;
+            case 3:
+                p("Der Com wählt Papier");
+                switch (opt) {
+                    case 1:
+                        p("Sie haben gewonnen");
+                        break;
+                    case 2:
+                        p("Sie haben verloren");
+                        break;
+                    case 3:
+                        p("Es ist unentschieden");
+                        break;
+                    default:
+                        p("Sie haben eine falsche Option gewählt.");
+                        break;
+                }
+            break;
+            default:
+                p("Die Entwickler haben Mist gebaut.");
+            break;
         }
     }
 }
