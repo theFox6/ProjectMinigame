@@ -69,6 +69,10 @@ public class Menu {
         boolean playOn;
         do {
             int choice = MenuFromStream();
+            if (choice<0 || choice>games.length) {
+                out.println("Bitte gib eine Zahl zwischen 0 und " + games.length + " ein.");
+                continue;
+            }
             PrintingGame game = games[choice];
             game.setStreams(out,in);
             do {
