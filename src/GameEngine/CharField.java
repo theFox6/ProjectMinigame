@@ -28,6 +28,10 @@ public class CharField {
         return get(new Short2DPoint(x,y));
     }
     
+    public char get(int x, int y) {
+        return get(new Short2DPoint(x,y));
+    }
+    
     public void set(Short2DPoint p, char c) {
         map.put(p, c);
     }
@@ -55,11 +59,14 @@ public class CharField {
         String str = "";
         int maxy = origin.y+size.y*scale.y;
         int maxx = origin.x+size.x*scale.x;
-        for (short yp = origin.y; yp < maxy; yp += scale.y) {
-            for (short xp = origin.x; xp < maxx; xp += scale.x) {
-                str = str + get(xp,yp);
+        for (short yp = origin.y; yp < maxy; yp++) {
+            for (short xp = origin.x; xp < maxx; xp++) {
+                if (xp%scale.x==0 && yp%scale.y==0)
+                    str += get(xp/scale.x,yp/scale.y);
+                else
+                    str += " ";
             }
-            str = str + "\n";
+            str += "\n";
         }
         return str;
     }
