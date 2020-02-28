@@ -5,6 +5,9 @@
  */
 package projectminigame;
 
+import GameEngine.GamePanel;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -23,9 +26,10 @@ public class ProjectMinigame extends JFrame implements Runnable {
     
     public ProjectMinigame() {
         super("ProjectMinigame");
-        add(new JScrollPane(pta));
+        setContentPane(new JScrollPane(pta));
         pack();
-        setExtendedState(MAXIMIZED_BOTH);
+        //setResizable(false);
+        //setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addWindowStateListener(new WindowAdapter() {
             @Override
@@ -38,6 +42,9 @@ public class ProjectMinigame extends JFrame implements Runnable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        Dimension scsize = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(GamePanel.WIDTH,GamePanel.HEIGHT);
+        setLocation(scsize.width / 2 - GamePanel.WIDTH / 2, scsize.height / 2 - GamePanel.HEIGHT / 2);
         setVisible(true);
     }
     
