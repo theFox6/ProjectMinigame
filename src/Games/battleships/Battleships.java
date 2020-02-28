@@ -1,4 +1,4 @@
-package Games;
+package Games.battleships;
 
 import GameEngine.CharField;
 import GameEngine.PrintingGame;
@@ -14,7 +14,7 @@ public class Battleships extends PrintingGame {
     
     public void displayField(CharField f) {
         Short2DPoint origin = new Short2DPoint(0,0);
-        Short2DPoint size = new Short2DPoint(11,11);
+        Short2DPoint size = new Short2DPoint(10,10);
         Short2DPoint scale = new Short2DPoint(2,1);
         p(f.toString(origin, size, scale));
     }
@@ -44,7 +44,6 @@ public class Battleships extends PrintingGame {
         displayField(f);
         CharField s = new CharField();
         
-        f.toString(0, 0, 22, 11);
         
     } 
 }

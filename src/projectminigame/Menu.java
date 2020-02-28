@@ -1,7 +1,7 @@
 package projectminigame;
 
 import GameEngine.PrintingGame;
-import Games.Battleships;
+import Games.battleships.Battleships;
 import Games.Mathgame;
 import Games.RPS;
 import Games.TTT;
