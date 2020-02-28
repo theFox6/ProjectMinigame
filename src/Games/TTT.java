@@ -1,13 +1,11 @@
 package Games;
 
 import GameEngine.PrintingGame;
-import java.io.PrintStream;
-import java.util.Scanner;
 
 public class TTT extends PrintingGame {
 
-    public TTT(PrintStream out, Scanner in) {
-        super("Tic Tac Toe", out, in);
+    public TTT() {
+        super("Tic Tac Toe");
 
     }
 

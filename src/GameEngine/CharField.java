@@ -54,6 +54,19 @@ public class CharField {
         }
         return str;
     }
+    
+    public String toString(Short2DPoint origin, Short2DPoint size, Short2DPoint scale) {
+        String str = "";
+        int maxy = origin.y+size.y*scale.y;
+        int maxx = origin.x+size.x*scale.x;
+        for (short yp = origin.y; yp < maxy; yp += scale.y) {
+            for (short xp = origin.x; xp < maxx; xp += scale.x) {
+                str = str + get(xp,yp);
+            }
+            str = str + "\n";
+        }
+        return str;
+    }
 
     public String toString(int x, int y, int width, int height) {
         return toString((short) x,(short) y,(short) width,(short) height);

@@ -17,11 +17,11 @@ public class Menu {
         this.out = out;
         this.in = in;
         PrintingGame[] g = {
-            new QuitOption(out,in),
-            new RPS(out,in),
-            new TTT(out,in),
-            new Mathgame(out,in),
-            new Battleships(out,in)
+            new QuitOption(),
+            new RPS(),
+            new TTT(),
+            new Mathgame(),
+            new Battleships()
         };
         games = g;
     }
@@ -43,8 +43,8 @@ public class Menu {
     
     public boolean beenden;
     private class QuitOption extends PrintingGame {
-        public QuitOption(PrintStream out, Scanner in) {
-            super("Minigame Sammlung schließen",out,in);
+        private QuitOption() {
+            super("Minigame Sammlung schließen");
             replayable = false;
         }
 
@@ -72,6 +72,7 @@ public class Menu {
         do {
             int choice = MenuFromStream();
             PrintingGame game = games[choice];
+            game.setStreams(out,in);
             do {
                 out.println(game.name);
                 out.println();

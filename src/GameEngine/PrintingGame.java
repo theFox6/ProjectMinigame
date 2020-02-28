@@ -9,8 +9,17 @@ public abstract class PrintingGame implements Runnable {
     protected PrintStream text;
     protected Scanner input;
     
+    public PrintingGame(String name) {
+        this.name = name;
+    }
+    
+    @Deprecated
     public PrintingGame(String name, PrintStream out, Scanner in) {
         this.name = name;
+        setStreams(out, in);
+    }
+    
+    public void setStreams(PrintStream out, Scanner in) {
         text = out;
         input = in;
     }
