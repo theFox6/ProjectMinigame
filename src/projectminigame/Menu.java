@@ -1,27 +1,38 @@
 package projectminigame;
 
-import GameEngine.PrintingGame;
+import GameEngine.Game;
+import GameEngine.GameManager;
+import printing.PrintingGame;
 import Games.Mathgame;
 import Games.RPS;
 import Games.TTT;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import painting.PaintingGame;
 
 public class Menu {
     private final PrintStream out;
     private final Scanner in;
-    PrintingGame[] games;
+    PrintingGame[] printingGames;
+    PaintingGame[] paintingGames;
+    private GameManager gameManager;
     
     public Menu(PrintStream out, Scanner in) {
         this.out = out;
         this.in = in;
-        PrintingGame[] g = {
+        PrintingGame[] tg = {
             new QuitOption(out,in),
             new RPS(out,in),
             new TTT(out,in),
             new Mathgame(out,in)
         };
-        games = g;
+        printingGames = tg;
+        PaintingGame[] gg = {
+        };
+        paintingGames = gg;
+        gameManager = new GameManager();
     }
     
     public static boolean truthyAnswer(String ans) {
@@ -58,7 +69,9 @@ public class Menu {
         out.println("Menü");
         out.println();
         int i = 0;
-        for (PrintingGame g : games)
+        for (PrintingGame g : printingGames)
+            out.println(i+++" - "+g.name);
+        for (PaintingGame g : paintingGames)
             out.println(i+++" - "+g.name);
         out.println("Bitte gib die Zahl des Spiels ein, welches du spielen möchtest.");
         int choice = in.nextInt();
@@ -69,12 +82,26 @@ public class Menu {
         boolean playOn;
         do {
             int choice = MenuFromStream();
-            PrintingGame game = games[choice];
+            Game game;
+            if (choice<printingGames.length)
+                game = printingGames[choice];
+            else {
+                choice -= printingGames.length;
+                game = paintingGames[choice];
+            }
             do {
+                try {
+                    gameManager.prepareGame(game);
+                } catch (GameManager.AlreadyRunningException ex) {
+                    out.println("fehler ein Spiel läuft noch");
+                }
                 out.println(game.name);
                 out.println();
-                game.run();
-
+                try {
+                    gameManager.start();
+                } catch (GameManager.AlreadyRunningException ex) {
+                    out.println("fehler ein Spiel läuft bereits");
+                }
                 if (game.replayable) {
                     out.println();
                     out.println("Nocheinmal spielen? (j/n)");

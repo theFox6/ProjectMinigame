@@ -1,6 +1,6 @@
 package Games;
 
-import GameEngine.PrintingGame;
+import printing.PrintingGame;
 import java.io.PrintStream;
 import java.util.Scanner;
 

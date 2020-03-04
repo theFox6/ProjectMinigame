@@ -5,7 +5,7 @@
  */
 package projectminigame;
 
-import GameEngine.GamePanel;
+import painting.GamePanel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;

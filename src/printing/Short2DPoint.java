@@ -1,4 +1,4 @@
-package GameEngine;
+package printing;
 
 public class Short2DPoint {
     public short x;
