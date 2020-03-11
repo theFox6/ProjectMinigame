@@ -23,13 +23,20 @@ public class CharField {
      * @param init the array to load
      */
     public void readArray(Character[][] init) {
+        //start at 0
         short x = 0;
+        //iterate through rows
         for (Character[] row : init) {
+            //restart at 0
             short y = 0;
+            //iterate through colums/cells
             for (Character c : row) {
+                //set the coordinate
                 this.set(x,y,c);
+                //increment y-position
                 y++;
             }
+            //increment x-position
             x++;
         }
     }
@@ -41,22 +48,50 @@ public class CharField {
      * @return the character
      */
     public char get(Short2DPoint p) {
+        //get the character mapped to the coordinate
         return map.getOrDefault(p,' ');
     }
     
+    /**
+     * Get the character at a certain point in 2D space.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @return the character or space if empty
+     */
     public char get(short x, short y) {
+        //create a coordinate point and get
         return get(new Short2DPoint(x,y));
     }
     
+    /**
+     * Get the character at a certain point in 2D space.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @return the character or space if empty
+     */
     public char get(int x, int y) {
+        //create a coordinate point and get
         return get(new Short2DPoint(x,y));
     }
     
+    /**
+     * Set the character at a certain point.
+     * @param p the coordinates to set
+     * @param c the character to put there
+     */
     public void set(Short2DPoint p, char c) {
+        //put a character at a point
         map.put(p, c);
     }
 
+    /**
+     * Set the character at a certain point.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param c the character to put there
+     */
     public void set(short x, short y, char c) {
+        //create a coordinate point and set
         set(new Short2DPoint(x,y), c);
     }
     
