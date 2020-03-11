@@ -3,6 +3,7 @@ package projectminigame;
 import GameEngine.PrintingGame;
 import Games.Mathgame;
 import Games.RPS;
+import Games.Slotgame;
 import Games.TTT;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -19,7 +20,8 @@ public class Menu {
             new QuitOption(),
             new RPS(),
             new TTT(),
-            new Mathgame()
+            new Mathgame(),
+            new Slotgame()
         };
         games = g;
     }
