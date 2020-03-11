@@ -70,4 +70,12 @@ public class CharField {
         }
         return str;
     }
+
+    public void set(int x, int y, char c) {
+       set((short)x,(short)y,c);
+    }
+
+    public String toString(int x, int y, int w, int h) {
+     return toString((short)x,(short)y,(short)w,(short)h);
+    }
 }
