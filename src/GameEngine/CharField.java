@@ -40,6 +40,10 @@ public class CharField {
         set(new Short2DPoint(x,y), c);
     }
     
+    public void set(int x, int y, char c) {
+        set((short) x,(short) y,c);
+    }
+    
     public void clear() {
         map.clear();
     }
@@ -53,6 +57,10 @@ public class CharField {
             str = str + "\n";
         }
         return str;
+    }
+
+    public String toString(int x, int y, int width, int height) {
+        return toString((short) x,(short) y,(short) width,(short) height);
     }
     
     public String toString(Short2DPoint origin, Short2DPoint size, Short2DPoint scale) {
