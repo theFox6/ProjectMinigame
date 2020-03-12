@@ -1,6 +1,7 @@
 package projectminigame;
 
 import GameEngine.PrintingGame;
+import Games.Dicegame;
 import Games.Mathgame;
 import Games.RPS;
 import Games.TTT;
@@ -19,7 +20,8 @@ public class Menu {
             new QuitOption(),
             new RPS(),
             new TTT(),
-            new Mathgame()
+            new Mathgame(),
+            new Dicegame()
         };
         games = g;
     }

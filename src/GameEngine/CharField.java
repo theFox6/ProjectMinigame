@@ -96,6 +96,16 @@ public class CharField {
     }
     
     /**
+     * Set the character at a certain point.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param c the character to put there
+     */
+    public void set(int x, int y, char c) {
+        set((short) x,(short) y,c);
+    }
+    
+    /**
      * Remove all characters from the CharField
      */
     public void clear() {
@@ -125,6 +135,10 @@ public class CharField {
         }
         //retrn the string?
         return str;
+    }
+
+    public String toString(int x, int y, int width, int height) {
+        return toString((short) x,(short) y,(short) width,(short) height);
     }
     
     /**
