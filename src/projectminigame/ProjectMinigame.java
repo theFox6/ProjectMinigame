@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projectminigame;
 
 import painting.GamePanel;
@@ -17,17 +12,24 @@ import javax.swing.JScrollPane;
 import textAreaIO.PrintingTextArea;
 
 /**
- *
- * @author JFuchs
+ * the runner of the whole application
+ * and also the main window
  */
 public class ProjectMinigame extends JFrame implements Runnable {
 	private static final long serialVersionUID = -4818574648486440494L;
+	/**
+	 * the text output
+	 */
 	private final PrintingTextArea pta = new PrintingTextArea();
 	private Menu menu = null;
     
+    /**
+     * set up the main frame
+     */
     public ProjectMinigame() {
         super("ProjectMinigame");
-        setContentPane(new JScrollPane(pta));
+    	//add the scrollable text area
+        add(new JScrollPane(pta));
         pack();
         //setResizable(false);
         //setExtendedState(MAXIMIZED_BOTH);
@@ -51,17 +53,24 @@ public class ProjectMinigame extends JFrame implements Runnable {
         setVisible(true);
     }
     
+    /**
+     * run the menu then close
+     */
     @Override
     public void run() {
-        menu = new Menu(pta.output, pta.input);
-        menu .runStream();
+    	//setup the menu and run it
+        menu = new Menu(pta);
+        menu.runStream();
+        // close the window
         dispose();
     }
 
     /**
+     * run the application
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+    	//run the main frame
         new ProjectMinigame().run();
     }
     

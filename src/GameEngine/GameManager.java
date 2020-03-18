@@ -21,7 +21,11 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     private int FPS = 60;
     private long targetTime = 1000 / FPS;
     
-    private void checkRunning() throws AlreadyRunningException {
+    public GameManager(PrintingTextArea pta) {
+		pa = pta;
+	}
+
+	private void checkRunning() throws AlreadyRunningException {
         if (currentG != null || currentT != null)
             throw new AlreadyRunningException();
     }
@@ -34,6 +38,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     public void prepare(PrintingGame game) throws AlreadyRunningException {
         checkRunning();
         currentT = game;
+        game.setStreams(pa.output, pa.input);
     }
     
     public void prepareGame(Game game) throws AlreadyRunningException {
@@ -68,6 +73,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     public void start(PrintingGame game) throws AlreadyRunningException {
         checkRunning();
         currentT = game;
+        game.setStreams(pa.output, pa.input);
         gameThread = new Thread(currentT,"game thread");
         gameThread.run();
     }
