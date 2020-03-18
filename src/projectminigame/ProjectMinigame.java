@@ -21,8 +21,9 @@ import textAreaIO.PrintingTextArea;
  * @author JFuchs
  */
 public class ProjectMinigame extends JFrame implements Runnable {
-    
-    private final PrintingTextArea pta = new PrintingTextArea();
+	private static final long serialVersionUID = -4818574648486440494L;
+	private final PrintingTextArea pta = new PrintingTextArea();
+	private Menu menu = null;
     
     public ProjectMinigame() {
         super("ProjectMinigame");
@@ -34,6 +35,8 @@ public class ProjectMinigame extends JFrame implements Runnable {
         addWindowStateListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
+            	if (menu != null)
+            		menu.terminate();
                 System.exit(0);
             }
         });
@@ -50,7 +53,8 @@ public class ProjectMinigame extends JFrame implements Runnable {
     
     @Override
     public void run() {
-        new Menu(pta.output, pta.input).runStream();
+        menu = new Menu(pta.output, pta.input);
+        menu .runStream();
         dispose();
     }
 

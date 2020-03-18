@@ -8,8 +8,6 @@ import Games.RPS;
 import Games.TTT;
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import painting.PaintingGame;
 
 public class Menu {
@@ -113,4 +111,8 @@ public class Menu {
             } while (playOn);
         } while (!beenden);
     }
+
+	public void terminate() {
+		gameManager.terminate();
+	}
 }

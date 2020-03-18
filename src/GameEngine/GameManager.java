@@ -53,6 +53,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
         } else if (currentT != null) {
             gameThread = new Thread(currentT,"game thread");
             gameThread.run();
+            currentT = null;
         } else
             throw new NullPointerException("no game prepared");
     }
@@ -97,6 +98,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
                         e.printStackTrace();
                 }
         }
+        currentG = null;
     }
 
     public void update() {
@@ -130,5 +132,10 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     }
 
     public static class AlreadyRunningException extends Exception {
+		private static final long serialVersionUID = -3213271580040806881L;
     }
+
+	public void terminate() {
+		gameThread.interrupt();
+	}
 }

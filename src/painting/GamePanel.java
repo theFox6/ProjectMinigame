@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel {
+	private static final long serialVersionUID = -7607435223209665995L;
 
 	// dimensions
 	public static final int WIDTH = 860;
