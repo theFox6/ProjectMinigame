@@ -1,12 +1,11 @@
 package Games;
 
-import GameEngine.PrintingGame;
+import printing.PrintingGame;
 
 public class TTT extends PrintingGame {
 
     public TTT() {
         super("Tic Tac Toe");
-
     }
 
     @Override

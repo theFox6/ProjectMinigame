@@ -1,12 +1,16 @@
 package projectminigame;
 
-import GameEngine.PrintingGame;
+import GameEngine.Game;
+import GameEngine.GameManager;
+import printing.PrintingGame;
+import textAreaIO.PrintingTextArea;
 import Games.Dicegame;
 import Games.Mathgame;
 import Games.RPS;
 import Games.TTT;
 import java.io.PrintStream;
 import java.util.Scanner;
+import painting.PaintingGame;
 
 /**
  * the screen showing all available games and asking which to play.
@@ -21,23 +25,24 @@ public class Menu {
      * the scanner to read the user inputs from
      */
     private final Scanner in;
-    
-    /**
-     * all available text based games
-     */
-    PrintingGame[] games;
+	/**
+	 * all available text based games
+	 */
+    PrintingGame[] printingGames;
+    PaintingGame[] paintingGames;
+    private GameManager gameManager;
     
     /**
      * prepare the Menu
      * @param out the stream to print the menu's contents to 
      * @param in the scanner to read the user inputs from
      */
-    public Menu(PrintStream out, Scanner in) {
+    public Menu(PrintingTextArea pta) {
     	//store the output and input
-        this.out = out;
-        this.in = in;
+        out = pta.output;
+        in = pta.input;
         //add all games to an array
-        PrintingGame[] g = {
+        PrintingGame[] tg = {
             new QuitOption(),
             new RPS(),
             new TTT(),
@@ -45,7 +50,11 @@ public class Menu {
             new Dicegame()
         };
         //set the game array
-        games = g;
+		printingGames = tg;
+        PaintingGame[] gg = {
+        };
+        paintingGames = gg;
+        gameManager = new GameManager(pta);
     }
     
     /**
@@ -108,7 +117,9 @@ public class Menu {
         out.println();
         //display all the games
         int i = 0;
-        for (PrintingGame g : games)
+        for (PrintingGame g : printingGames)
+            out.println(i+++" - "+g.name);
+        for (PaintingGame g : paintingGames)
             out.println(i+++" - "+g.name);
         //ask the user
         out.println("Bitte gib die Zahl des Spiels ein, welches du spielen möchtest.");
@@ -129,23 +140,31 @@ public class Menu {
         do {
         	//actually display it
             int choice = menuFromStream();
+			Game game;
             //check if the choice was ok
-            if (choice<0 || choice>games.length) {
-                out.println("Bitte gib eine Zahl zwischen 0 und " + games.length + " ein.");
-                continue;
+            if (choice<printingGames.length)
+                game = printingGames[choice];
+            else {
+                choice -= printingGames.length;
+                game = paintingGames[choice];
             }
-            //select the game
-            PrintingGame game = games[choice];
-            //setup the game
-            game.setStreams(out,in);
             //start playing
             do {
+                try {
+                    gameManager.prepareGame(game);
+                } catch (GameManager.AlreadyRunningException ex) {
+                    out.println("fehler ein Spiel läuft noch");
+                }
             	//the game's header
                 out.println(game.name);
                 out.println();
                 //run the game
-                game.run();
-
+                try {
+                    gameManager.start();
+                } catch (GameManager.AlreadyRunningException ex) {
+                    out.println("fehler ein Spiel läuft bereits");
+                }
+                
                 if (game.replayable) {
                 	//ask the user whether to play again
                     out.println();
@@ -161,4 +180,8 @@ public class Menu {
             } while (playOn);
         } while (!beenden);
     }
+
+	public void terminate() {
+		gameManager.terminate();
+	}
 }

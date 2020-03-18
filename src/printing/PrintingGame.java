@@ -1,20 +1,10 @@
-package GameEngine;
+package printing;
 
+import GameEngine.Game;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public abstract class PrintingGame implements Runnable {
-
-    /**
-     * whether the menu will ask if you want to play again
-     */
-    public boolean replayable = true;
-
-    /**
-     * the games name that is shown in the menu
-     */
-    public final String name;
-
+public abstract class PrintingGame extends Game {
     /**
      * the output stream
      */
@@ -30,7 +20,7 @@ public abstract class PrintingGame implements Runnable {
      * @param name the displayed name of the game
      */
     public PrintingGame(String name) {
-        this.name = name;
+        super(name);
     }
     
     /**
@@ -43,7 +33,7 @@ public abstract class PrintingGame implements Runnable {
     @Deprecated
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public PrintingGame(String name, PrintStream out, Scanner in) {
-        this.name = name;
+        super(name);
         setStreams(out, in);
     }
     

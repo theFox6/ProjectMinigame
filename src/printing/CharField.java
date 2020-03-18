@@ -1,4 +1,4 @@
-package GameEngine;
+package printing;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
