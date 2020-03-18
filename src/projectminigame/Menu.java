@@ -6,6 +6,7 @@ import printing.PrintingGame;
 import Games.Dicegame;
 import Games.Mathgame;
 import Games.RPS;
+import Games.Slotgame;
 import Games.TTT;
 import gameEngine.PanelManager;
 
@@ -53,6 +54,7 @@ public class Menu {
             new RPS(),
             new TTT(),
             new Mathgame(),
+            new Slotgame(),
             new Dicegame()
         };
         //set the game array
