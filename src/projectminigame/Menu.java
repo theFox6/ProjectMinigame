@@ -3,6 +3,7 @@ package projectminigame;
 import GameEngine.Game;
 import GameEngine.GameManager;
 import printing.PrintingGame;
+import Games.Dicegame;
 import Games.Mathgame;
 import Games.RPS;
 import Games.TTT;
@@ -19,23 +20,43 @@ import java.util.Scanner;
 import painting.GamePanel;
 import painting.PaintingGame;
 
+/**
+ * the screen showing all available games and asking which to play.
+ */
 public class Menu {
+    /**
+     * the stream to print the menu's contents to
+     */
     private final PrintStream out;
+    
+    /**
+     * the scanner to read the user inputs from
+     */
     private final Scanner in;
+	/**
+	 * all available text based games
+	 */
     PrintingGame[] printingGames;
     PaintingGame[] paintingGames;
     private GameManager gameManager;
 	private PanelManager panelManager;
     
+    /**
+     * prepare the Menu
+     */
     public Menu(GameManager gm, PanelManager pm) {
-        this.out = pm.getTextOut();
-        this.in = pm.getTextIn();
+    	//store the output and input
+        out = pm.getTextOut();
+        in = pm.getTextIn();
+        //add all games to an array
         PrintingGame[] tg = {
-            new RPS(out,in),
-            new TTT(out,in),
-            new Mathgame(out,in)
+            new RPS(),
+            new TTT(),
+            new Mathgame(),
+            new Dicegame()
         };
-        printingGames = tg;
+        //set the game array
+		printingGames = tg;
         PaintingGame[] gg = {
         		new QuitOption()
         };
@@ -44,8 +65,13 @@ public class Menu {
         panelManager = pm;
     }
     
+    /**
+     * Whether an answer can be interpreted as yes
+     * @param ans the String the user typed
+     * @return whether it is a yes
+     */
     public static boolean truthyAnswer(String ans) {
-        switch (ans) {
+        switch (ans.toLowerCase()) {
             case "j":
             case "ja":
             case "y":
@@ -59,13 +85,22 @@ public class Menu {
         }
     }
     
+    /**
+     * whether to quit the menu
+     */
     public boolean beenden;
+
+    /**
+	 * the menu option that closes the menu
+	 */
     private class QuitOption extends PaintingGame {
         private int selection;
 		private boolean first;
 
 		public QuitOption() {
+        	//set up the text
             super("Minigame Sammlung schließen");
+            //don't ask if the user wants to play it again
             replayable = false;
         }
 		
@@ -75,6 +110,9 @@ public class Menu {
 			first = true;
 		}
 
+        /**
+         * close the menu
+         */
         @Override
         public void run() {}
 
@@ -112,31 +150,49 @@ public class Menu {
 		}
     }
     
-    public int MenuFromStream() {
+    /**
+     * display the choice of games and ask the user what to play
+     * @return whatever the user chose
+     */
+    public int menuFromStream() {
     	panelManager.showTextPanel();
+    	//header
         out.println("Menü");
         out.println();
+        //display all the games
         int i = 0;
         for (PrintingGame g : printingGames)
             out.println(i+++" - "+g.name);
         for (PaintingGame g : paintingGames)
             out.println(i+++" - "+g.name);
+        //ask the user
         out.println("Bitte gib die Zahl des Spiels ein, welches du spielen möchtest.");
+        //get his choice
         int choice = in.nextInt();
+        //return it
         return choice;
     }
 
+    /**
+     * run the Menu and the user selected games
+     * until the user wishes to close it 
+     */
     public void runStream() {
+    	// whether to play the game again
         boolean playOn;
+        //start displaying the menu
         do {
-            int choice = MenuFromStream();
-            Game game;
+        	//actually display it
+            int choice = menuFromStream();
+			Game game;
+            //check if the choice was ok
             if (choice<printingGames.length)
                 game = printingGames[choice];
             else {
                 choice -= printingGames.length;
                 game = paintingGames[choice];
             }
+            //start playing
             do {
                 try {
                     gameManager.prepareGame(game);
@@ -144,8 +200,10 @@ public class Menu {
                     out.println("Fehler: ein Spiel läuft noch");
                     System.err.println("Fehler: ein Spiel läuft noch");
                 }
+            	//the game's header
                 out.println(game.name);
                 out.println();
+                //run the game
                 try {
                     gameManager.start();
                 } catch (GameManager.AlreadyRunningException ex) {
@@ -153,13 +211,18 @@ public class Menu {
                     System.err.println("Fehler: ein Spiel läuft bereits");
                 }
                 panelManager.showTextPanel();
+                
                 if (game.replayable) {
+                	//ask the user whether to play again
                     out.println();
                     out.println("Nocheinmal spielen? (j/n)");
+                    //get the answer
                     String c = in.next();
+                    //play on if it was a yes
                     playOn = truthyAnswer(c);
                 } else {
-                   playOn = false;
+                	// stop if the game doesn't want to be played again
+                	playOn = false;
                 }
             } while (playOn);
         } while (!beenden);

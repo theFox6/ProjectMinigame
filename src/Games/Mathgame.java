@@ -1,15 +1,12 @@
 package Games;
 
 import printing.PrintingGame;
-import java.io.PrintStream;
-import java.util.Scanner;
 
 public class Mathgame extends PrintingGame {
-    public Mathgame(PrintStream out, Scanner in) {
-        super("Kopfrechnen", out, in);
-        
+    public Mathgame() {
+        super("Kopfrechnen");
     }
-    
+
     @Override
     public void run() {
         

@@ -39,6 +39,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     public void prepare(PrintingGame game) throws AlreadyRunningException {
         checkRunning();
         currentT = game;
+        game.setStreams(pm.getTextOut(), pm.getTextIn());
     }
     
     public void prepareGame(Game game) throws AlreadyRunningException {
@@ -76,6 +77,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
         checkRunning();
         currentT = game;
         pm.showTextPanel();
+        game.setStreams(pm.getTextOut(), pm.getTextIn());
         gameThread = new Thread(currentT,"game thread");
         gameThread.run();
     }

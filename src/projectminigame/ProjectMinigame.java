@@ -18,12 +18,16 @@ import gameEngine.PanelManager;
 import textAreaIO.PrintingTextArea;
 
 /**
- *
- * @author JFuchs
+ * the runner of the whole application
+ * and also the main window
  */
 public class ProjectMinigame extends JFrame implements Runnable, PanelManager {
 	private static final long serialVersionUID = -4818574648486440494L;
 	private final GameManager gm = new GameManager(this);
+
+	/**
+	 * the text output
+	 */
 	private final PrintingTextArea pta = new PrintingTextArea();
 	private final GamePanel gp = new GamePanel(gm);
 	private Menu menu = null;
@@ -36,9 +40,13 @@ public class ProjectMinigame extends JFrame implements Runnable, PanelManager {
 	    new ProjectMinigame().run();
 	}
 
+	/*
+     * set up the main frame
+     */
 	public ProjectMinigame() {
         super("ProjectMinigame");
         scrollPane = new JScrollPane(pta);
+    	//add the scrollable text area
         add(scrollPane);
         scrollPane.setLocation(0,0);
         scrollPane.setSize(GamePanel.WIDTH-5, GamePanel.HEIGHT-30);
@@ -67,10 +75,15 @@ public class ProjectMinigame extends JFrame implements Runnable, PanelManager {
         setVisible(true);
     }
     
+    /**
+     * run the menu then close
+     */
     @Override
     public void run() {
+		//setup the menu and run it
         menu = new Menu(gm, this);
-        menu .runStream();
+		menu.runStream();
+        // close the window
         dispose();
     }
 
@@ -109,6 +122,5 @@ public class ProjectMinigame extends JFrame implements Runnable, PanelManager {
 	@Override
 	public Scanner getTextIn() {
 		return pta.input;
-	}
-    
+	}    
 }
