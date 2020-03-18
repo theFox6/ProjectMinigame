@@ -1,6 +1,6 @@
 package Games;
 
-import GameEngine.PrintingGame;
+import printing.PrintingGame;
 
 public class RPS extends PrintingGame {
     public RPS() {
@@ -17,7 +17,7 @@ public class RPS extends PrintingGame {
         int opt = input.nextInt();
         
         // zufällige Auswahl des Com Spielers
-        int zufall = (int) Math.round(Math.random() * 2) + 1;
+        int zufall = randomInt(3) + 1;
         // Auswertung des Ergebnisses
         switch (zufall) {
             case 1:
