@@ -7,19 +7,23 @@ import painting.Paintable;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import textAreaIO.PrintingTextArea;
+
+import gameEngine.PanelManager;
 
 public class GameManager implements KeyListener,Paintable,Runnable {
     
-    private GamePanel gp;
     public PaintingGame currentG;
-    public PrintingTextArea pa;
     public PrintingGame currentT;
+    public PanelManager pm;
     
     // game thread
     private Thread gameThread;
     private int FPS = 60;
     private long targetTime = 1000 / FPS;
+    
+    public GameManager(PanelManager pm) {
+    	this.pm = pm;
+    }
     
     private void checkRunning() throws AlreadyRunningException {
         if (currentG != null || currentT != null)
@@ -29,6 +33,7 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     public void prepare(PaintingGame game) throws AlreadyRunningException {
         checkRunning();
         currentG = game;
+        game.prepare();
     }
     
     public void prepare(PrintingGame game) throws AlreadyRunningException {
@@ -49,8 +54,9 @@ public class GameManager implements KeyListener,Paintable,Runnable {
                 throw new AlreadyRunningException();
         if (currentG != null) {
             gameThread = new Thread(this);
-            gameThread.start();
+            gameThread.run();
         } else if (currentT != null) {
+        	pm.showTextPanel();
             gameThread = new Thread(currentT,"game thread");
             gameThread.run();
             currentT = null;
@@ -61,19 +67,23 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     public void start(PaintingGame game) throws AlreadyRunningException {
         checkRunning();
         currentG = game;
+        game.prepare();
         gameThread = new Thread(this,"game thread");
-        gameThread.start();
+        gameThread.run();
     }
     
     public void start(PrintingGame game) throws AlreadyRunningException {
         checkRunning();
         currentT = game;
+        pm.showTextPanel();
         gameThread = new Thread(currentT,"game thread");
         gameThread.run();
     }
     
     @Override
     public void run() {
+    	pm.showGraphicsPanel();
+    	GamePanel gp = pm.getGraphicsPanel();
         long start;
         long elapsed;
         long wait;
