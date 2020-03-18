@@ -1,6 +1,6 @@
 package Games.battleships;
 
-import GameEngine.Short2DPoint;
+import printing.Short2DPoint;
 
 public class Ship {
     

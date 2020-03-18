@@ -1,10 +1,8 @@
 package Games.battleships;
 
-import GameEngine.CharField;
-import GameEngine.PrintingGame;
-import GameEngine.Short2DPoint;
-import java.io.PrintStream;
-import java.util.Scanner;
+import printing.CharField;
+import printing.PrintingGame;
+import printing.Short2DPoint;
 
 public class Battleships extends PrintingGame {
     public Battleships() {
