@@ -24,7 +24,7 @@ public class Short2DPoint {
     
     /**
      * create a Short2DPoint with the given coordinates
-     * the given ints will be converted to shorts
+     * the given integers will be converted to shorts
      * @param x the x position
      * @param y the y position
      */
@@ -40,7 +40,7 @@ public class Short2DPoint {
     }
     
     /**
-     * hash the two short coordinates into an int hash code
+     * hash the two short coordinates into an integer hash code
      * @return the y coordinate shifted 16 bits to the left plus the x coordinate
      */
     @Override
@@ -69,7 +69,7 @@ public class Short2DPoint {
             //it's not the same
             return false;
         }
-        // convert the objetc into a Short2DPoint
+        // convert the object into a Short2DPoint
         final Short2DPoint other = (Short2DPoint) obj;
         //if the x coordinate is different
         if (this.x != other.x) {

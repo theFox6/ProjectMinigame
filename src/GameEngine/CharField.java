@@ -29,7 +29,7 @@ public class CharField {
         for (Character[] row : init) {
             //restart at 0
             short y = 0;
-            //iterate through colums/cells
+            //iterate through columns/cells
             for (Character c : row) {
                 //set the coordinate
                 this.set(x,y,c);
@@ -125,7 +125,7 @@ public class CharField {
         String str = "";
         //iterate through rows
         for (short yp = y; yp < y+height; yp++) {
-            //iterate through collums
+            //iterate through columns
             for (short xp = x; xp < x+width; xp++) {
                 //add the field
                 str = str + get(xp,yp);
@@ -133,7 +133,7 @@ public class CharField {
             //end the row
             str = str + "\n";
         }
-        //retrn the string?
+        //return the string?
         return str;
     }
 
@@ -156,7 +156,7 @@ public class CharField {
         int maxx = origin.x+size.x*scale.x;
         //iterate through rows
         for (short yp = origin.y; yp < maxy; yp++) {
-            //iterate through collums
+            //iterate through columns
             for (short xp = origin.x; xp < maxx; xp++) {
                 if (xp%scale.x==0 && yp%scale.y==0)
                     //if it's a field to scan add it
