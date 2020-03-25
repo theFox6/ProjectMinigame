@@ -1,9 +1,9 @@
 package painting;
 
-import GameEngine.Game;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import gameEngine.Game;
 
 public abstract class PaintingGame extends Game implements KeyListener, Runnable, Paintable {
     public volatile boolean running = true;

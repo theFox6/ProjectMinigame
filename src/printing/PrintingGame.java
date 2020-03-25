@@ -1,8 +1,9 @@
 package printing;
 
-import GameEngine.Game;
 import java.io.PrintStream;
 import java.util.Scanner;
+
+import gameEngine.Game;
 
 public abstract class PrintingGame extends Game {
     /**

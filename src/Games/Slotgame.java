@@ -1,6 +1,6 @@
 package Games;
 
-import GameEngine.PrintingGame;
+import printing.PrintingGame;
 
 public class Slotgame extends PrintingGame {
     public Slotgame() {

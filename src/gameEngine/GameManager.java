@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 import painting.GamePanel;
 import printing.PrintingGame;

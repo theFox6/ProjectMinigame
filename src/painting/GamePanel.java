@@ -1,12 +1,13 @@
 package painting;
 
-import GameEngine.GameManager;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
+
+import gameEngine.GameManager;
 
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = -7607435223209665995L;
