@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import GameEngine.GameManager;
+import gameEngine.GameManager;
 import gameEngine.PanelManager;
 import textAreaIO.PrintingTextArea;
 

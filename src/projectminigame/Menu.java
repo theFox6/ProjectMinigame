@@ -1,13 +1,13 @@
 package projectminigame;
 
-import GameEngine.Game;
-import GameEngine.GameManager;
 import printing.PrintingGame;
 import Games.Dicegame;
 import Games.Mathgame;
 import Games.RPS;
 import Games.Slotgame;
 import Games.TTT;
+import gameEngine.Game;
+import gameEngine.GameManager;
 import gameEngine.PanelManager;
 
 import java.awt.BasicStroke;

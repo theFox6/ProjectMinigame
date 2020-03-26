@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 import painting.GamePanel;
 import printing.PrintingGame;
@@ -7,8 +7,6 @@ import painting.Paintable;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import gameEngine.PanelManager;
 
 public class GameManager implements KeyListener,Paintable,Runnable {
     
