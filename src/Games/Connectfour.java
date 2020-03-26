@@ -1,5 +1,6 @@
 package Games;
 
+import printing.CharField;
 import printing.PrintingGame;
 
 public class Connectfour extends PrintingGame {
@@ -10,9 +11,11 @@ public class Connectfour extends PrintingGame {
 
     @Override
     public void run() {
+        CharField f = new CharField();
+        char colour = ' ', first = 't';
+        String playername = "";
         Boolean win = false, player = true, abr = false;
-        String colour = "", first = "none";
-        int width = 0, n, height = 0, y, x, w, fieldsx = 0, fieldsy = 0;
+        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0;
         // set size
         do {
             p("Wieviele Fields wollen Sie in X-Richtung");
@@ -23,98 +26,64 @@ public class Connectfour extends PrintingGame {
                 p("Bitte wÃ¤hlen Sie mindestens 4x4 ");
             }
         } while (fieldsx < 4 || fieldsy < 4);
+
         fieldsx = (fieldsx - 1) * 2;
         fieldsy = (fieldsy - 1) * 2;
-        // create Field for Numbers
-        String[] numbers = new String[fieldsx + 1];
-        // for " "
-        for (x = 1; x <= fieldsx; x = x + 2) {
-            numbers[x] = " ";
+
+        //Charfield
+        // for |
+        for (y = 0; y <= fieldsy; y = y + 2) {
+            for (x = 1; x <= fieldsx; x = x + 2) {
+                f.set(x, y, '|');
+            }
         }
-        // for number
-        n = 1;
-        for (x = 0; x <= fieldsx; x = x + 2) {
-            numbers[x] = String.valueOf(n);
-            n++;
+        //for -
+        for (y = 1; y <= fieldsy; y = y + 2) {
+            for (x = 0; x <= fieldsx; x = x + 2) {
+                f.set(x, y, '-');
+            }
         }
-        // create field for number
-        for (x = 0; x <= fieldsx; x++) {
-            text.print(numbers[x]);
+        //for +
+        for (y = 1; y <= fieldsy; y = y + 2) {
+            for (x = 1; x <= fieldsx; x = x + 2) {
+                f.set(x, y, '+');
+            }
         }
         p("");
+        p(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
 
-        String[][] fields = new String[fieldsy + 1][fieldsx + 1];
-        // for |
-        for (x = 1; x <= fieldsx; x = x + 2) {
-            for (y = 0; y <= fieldsy; y = y + 2) {
-                fields[y][x] = "|";
-            }
-        }
-        // for -
-        for (x = 0; x <= fieldsx; x = x + 2) {
-            for (y = 1; y <= fieldsy; y = y + 2) {
-                fields[y][x] = "-";
-            }
-        }
-        // for +
-        for (x = 1; x <= fieldsx; x = x + 2) {
-            for (y = 1; y <= fieldsy; y = y + 2) {
-                fields[y][x] = "+";
-            }
-        }
-        // for " "
-        for (x = 0; x <= fieldsx; x = x + 2) {
-            for (y = 0; y <= fieldsy; y = y + 2) {
-                fields[y][x] = " ";
-            }
-        }
-        // creates field for game
-        for (y = 0; y <= fieldsy; y++) {
-            for (x = 0; x <= fieldsx; x++) {
-                text.print(fields[y][x]);
-            }
-            p("");
-        }
         // the Game
         while (!win && !abr) {
             // set the line/row
             do {
                 if (player) {
-                    p("");
-                    p("Spieler 1 ist an der Reihe ");
-                    p("Sie haben O");
-                    colour = "O";
+                    p("Spieler 1 ist an der Reihe.");
+                    p("Sie haben O.");
+                    colour = 'O';
+                    playername = "Spieler 1";
                 } else if (!player) {
-                    p("");
-                    p("Spieler 2 ist an der Reihe ");
-                    p("Sie haben X");
-                    colour = "X";
+                    p("Spieler 2 ist an der Reihe.");
+                    p("Sie haben X.");
+                    colour = 'X';
+                    playername = "Spieler 2";
                 }
-                p("In welche Reihe wollen Sie setzen");
+                p("In welche Reihe wollen Sie setzen.");
                 width = input.nextInt();
                 width = (width - 1) * 2;
 
-                if (width < 0 || width > fieldsx || fields[0][width] != " ") {
-                    p("Bitte wÃ¤hlen Sie eine gÃ¼ltige Reihe");
+                if (width < 0 || width > fieldsx || f.get(width, 0) != ' ') {
+                    p("Bitte wÃ¤hlen Sie eine gÃ¼ltige Reihe.");
                 }
-            } while (width < 0 || width > fieldsx || fields[0][width] != " ");
+            } while (width < 0 || width > fieldsx || f.get(width, 0) != ' ');
             // determine the height of each chip
             for (height = fieldsy; height >= 0; height = height - 2) {
-                if (fields[height][width] == " ") {
+                if (f.get(width, height) == ' ') {
                     // set the chip
-                    fields[height][width] = colour;
-                    // creat field for numbers
-                    for (x = 0; x <= fieldsx; x++) {
-                        text.print(numbers[x]);
-                    }
+                    f.set(width, height, colour);
+
                     // create a new field
                     p("");
-                    for (y = 0; y <= fieldsy; y++) {
-                        for (x = 0; x <= fieldsx; x++) {
-                            text.print(fields[y][x]);
-                        }
-                        p("");
-                    }
+                    p(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
                     break;
                 }
             }
@@ -123,14 +92,14 @@ public class Connectfour extends PrintingGame {
             if (height <= fieldsy - (3 * 2)) {
                 n = 0;
                 for (y = height; y <= height + (3 * 2); y = y + 2) {
-                    if (fields[y][width] == colour) {
+                    if (f.get(width, y) == colour) {
                         n++;
                     } else {
                         break;
                     }
                 }
                 if (n == 4) {
-                    p("Es gibt einen Sieger");
+                    p(playername + " hat gewonnen.");
                     win = true;
                 }
             }
@@ -138,13 +107,13 @@ public class Connectfour extends PrintingGame {
             if (!win) {
                 n = 0;
                 for (x = 0; x <= fieldsx; x = x + 2) {
-                    if (fields[height][x] == colour) {
+                    if (f.get(x, height) == colour) {
                         n++;
                     } else {
                         n = 0;
                     }
                     if (n == 4) {
-                        p("Es gibt einen Sieger");
+                        p(playername + " hat gewonnen.");
                         win = true;
                         break;
                     }
@@ -160,13 +129,13 @@ public class Connectfour extends PrintingGame {
                     y = y + 2;
                 }
                 while (x <= fieldsx && y >= 0) {
-                    if (fields[y][x] == colour) {
+                    if (f.get(x, y) == colour) {
                         n++;
                     } else {
                         n = 0;
                     }
                     if (n == 4) {
-                        p("Es gibt einen Sieger");
+                        p(playername + " hat gewonnen.");
                         win = true;
                         break;
                     }
@@ -184,13 +153,13 @@ public class Connectfour extends PrintingGame {
                     y = y + 2;
                 }
                 while (x >= 0 && y >= 0) {
-                    if (fields[y][x] == colour) {
+                    if (f.get(x, y) == colour) {
                         n++;
                     } else {
                         n = 0;
                     }
                     if (n == 4) {
-                        p("Es gibt einen Sieger");
+                        p(playername + " hat gewonnen.");
                         win = true;
                         break;
                     }
@@ -204,13 +173,13 @@ public class Connectfour extends PrintingGame {
             if (!win) {
                 y = 0;
                 for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
-                    first = "none";
+                    first = 't';
                     n = 0;
                     for (x = w; x <= w + (3 * 2); x = x + 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
+                        if (first == 't' && f.get(x, y) != ' ') {
+                            first = f.get(x, y);
                         }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
+                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
                             n++;
                         } else {
                             break;
@@ -224,13 +193,13 @@ public class Connectfour extends PrintingGame {
             if (!win && n != 4) {
                 // x=variabel
                 for (x = 0; x <= fieldsx; x = x + 2) {
-                    first = "none";
+                    first = 't';
                     n = 0;
                     for (y = 0; y <= 3 * 2; y = y + 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
+                        if (first == 't' && f.get(x, y) != ' ') {
+                            first = f.get(x, y);
                         }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
+                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
                             n++;
                         } else {
                             break;
@@ -245,13 +214,13 @@ public class Connectfour extends PrintingGame {
                 // -x
                 for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
                     y = 0;
-                    first = "none";
+                    first = 't';
                     n = 0;
                     for (x = w; x <= w + (3 * 2); x = x + 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
+                        if (first == 't' && f.get(x, y) != ' ') {
+                            first = f.get(x, y);
                         }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
+                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
                             n++;
                         } else {
                             break;
@@ -267,13 +236,13 @@ public class Connectfour extends PrintingGame {
                 // x
                 for (w = fieldsx; w >= 0 + (3 * 2); w = w - 2) {
                     y = 0;
-                    first = "none";
+                    first = 't';
                     n = 0;
                     for (x = w; x >= w - (3 * 2); x = x - 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
+                        if (first == 't' && f.get(x, y) != ' ') {
+                            first = f.get(x, y);
                         }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
+                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
                             n++;
                         } else {
                             break;
@@ -286,7 +255,7 @@ public class Connectfour extends PrintingGame {
                 }
             }
             if (n != 4) {
-                p("Es gibt keine MÃ¶glichkeit mehr um zu gewinnen");
+                p("Es gibt keine MÃ¶glichkeit mehr um zu gewinnen.");
                 abr = true;
             }
 //end check possibility of win
