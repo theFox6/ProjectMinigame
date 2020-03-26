@@ -11,14 +11,26 @@ public class TTT extends PrintingGame {
 
     @Override
     public void run() {
-        int field = 0, y, x;
+        int field = 0, y, x, n;
         char XO = ' ';
         boolean win = false, player = true, switching = true, full = false;
         CharField f = new CharField();
         String winner = "";
-
-        //creates the Charfield
-        // for|
+        
+        //intruduction
+        p("Das Spiel ist wiefolgt aufgebaut:");
+        //creates the Charfields
+        //for numbers
+        n = 1;
+        for (y = 0; y <= 4; y = y + 2) {
+            for (x = 0; x <= 4; x = x + 2) {
+                final int RADIX = 10;
+                char ch = Character.forDigit(n, RADIX);
+                f.set(x, y, ch);
+                n++;
+            }
+        }
+        // for |
         for (y = 0; y <= 4; y = y + 2) {
             for (x = 1; x <= 4; x = x + 2) {
                 f.set(x, y, '|');
@@ -36,20 +48,17 @@ public class TTT extends PrintingGame {
                 f.set(x, y, '+');
             }
         }
-        /*
-        //for numbers
-        for (int n='1';n<=9;n++){
-        for (y = 0; y <= 4; y = y + 2) {
-            for (x = 0; x <= 4; x = x + 2) {
-                char c=(char)n;
-                f.set(x, y, c);
-            }
-        }
-        }
-         */
-       
+
         //print the field
         p(f.toString(0, 0, 5, 5));
+        
+        //reset the numbers
+        for (y = 0; y <= 4; y = y + 2) {
+            for (x = 0; x <= 4; x = x + 2) {         
+                f.set(x, y,' ');
+            }
+        }
+        
 
         //playable
         while (!win && !full) {
@@ -84,7 +93,7 @@ public class TTT extends PrintingGame {
                     switching = false;
                 }
             } else {
-                p("Dieses Feld ist nicht existent.");
+                p("Dieses Feld existiert nicht.");
                 switching = false;
             }
 
@@ -112,7 +121,7 @@ public class TTT extends PrintingGame {
                 win = true;
                 p(winner + "hat gewonnen");
             }
-//check if full
+            //check if full
             if (!win) {
                 full = true;
                 for (x = 0; x <= 4; x = x + 2) {
