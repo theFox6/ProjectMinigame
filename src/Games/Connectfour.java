@@ -12,6 +12,7 @@ public class Connectfour extends PrintingGame {
     @Override
     public void run() {
         CharField f = new CharField();
+        CharField g = new CharField();
         char colour = ' ', first = 't';
         String playername = "";
         Boolean win = false, player = true, abr = false;
@@ -29,7 +30,18 @@ public class Connectfour extends PrintingGame {
 
         fieldsx = (fieldsx - 1) * 2;
         fieldsy = (fieldsy - 1) * 2;
-
+        p("");
+        n = 1;
+        y = 0;
+        for (x = 0; x <= fieldsx; x = x + 2) {
+            final int RADIX = 10;
+            char ch = Character.forDigit(n, RADIX);
+            g.set(x, y, ch);
+            n++;
+        }
+        //print field
+          text.print(g.toString(0, 0, fieldsx + 1,1));
+          
         //Charfield
         // for |
         for (y = 0; y <= fieldsy; y = y + 2) {
@@ -49,9 +61,9 @@ public class Connectfour extends PrintingGame {
                 f.set(x, y, '+');
             }
         }
-        p("");
-        p(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
-
+        //print field
+         text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
+         p("");
         // the Game
         while (!win && !abr) {
             // set the line/row
@@ -80,10 +92,10 @@ public class Connectfour extends PrintingGame {
                 if (f.get(width, height) == ' ') {
                     // set the chip
                     f.set(width, height, colour);
-
                     // create a new field
+                    text.print(g.toString(0, 0, fieldsx + 1,1));
+                    text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
                     p("");
-                    p(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
                     break;
                 }
             }
