@@ -13,7 +13,7 @@ public class Connectfour extends PrintingGame {
     public void run() {
         CharField f = new CharField();
         CharField g = new CharField();
-        char colour = ' ', first = 't';
+        char colour = ' ', first = 't',n2;
         String playername = "";
         Boolean win = false, player = true, abr = false;
         int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0;
@@ -35,8 +35,8 @@ public class Connectfour extends PrintingGame {
         y = 0;
         for (x = 0; x <= fieldsx; x = x + 2) {
             final int RADIX = 10;
-            char ch = Character.forDigit(n, RADIX);
-            g.set(x, y, ch);
+            n2 = Character.forDigit(n, RADIX);
+            g.set(x, y, n2);
             n++;
         }
         //print field
