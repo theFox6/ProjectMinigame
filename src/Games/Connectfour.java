@@ -19,12 +19,12 @@ public class Connectfour extends PrintingGame {
         int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0;
         // set size
         do {
-            p("Wieviele Fields wollen Sie in X-Richtung");
+            p("Wieviele Fields wollen Sie in X-Richtung?");
             fieldsx = input.nextInt();
-            p("Wieviele Fields wollen Sie in Y-Richtung");
+            p("Wieviele Fields wollen Sie in Y-Richtung?");
             fieldsy = input.nextInt();
             if (fieldsx < 4 || fieldsy < 4) {
-                p("Bitte wÃ¤hlen Sie mindestens 4x4 ");
+                p("Bitte wÃ¤hlen Sie mindestens 4x4!");
             }
         } while (fieldsx < 4 || fieldsy < 4);
 
@@ -79,7 +79,7 @@ public class Connectfour extends PrintingGame {
                     colour = 'X';
                     playername = "Spieler 2";
                 }
-                p("In welche Reihe wollen Sie setzen.");
+                p("In welche Reihe wollen Sie setzen?");
                 width = input.nextInt();
                 width = (width - 1) * 2;
 
