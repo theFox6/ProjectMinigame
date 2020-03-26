@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import gameEngine.PanelManager;
-
 public class GameManager implements KeyListener,Paintable,Runnable {
     
     public PaintingGame currentG;

@@ -1,5 +1,6 @@
 package Games;
 
+import printing.CharField;
 import printing.PrintingGame;
 
 public class TTT extends PrintingGame {
@@ -10,104 +11,123 @@ public class TTT extends PrintingGame {
 
     @Override
     public void run() {
-        int a = 0;
-        String XO = "";
-        boolean win = false, player1 = true, s, belegt=false;
-        String[][] Felder = {
-            {" ", "|", " ", "|", " "},
-            {"-", "+", "-", "+", "-"},
-            {" ", "|", " ", "|", " "},
-            {"-", "+", "-", "+", "-"},
-            {" ", "|", " ", "|", " "},};
-        //Ausgabe vom Array
-        printBorder(Felder);
-        while (!win && !belegt) {
-            s = true;
-            if (player1 == true) {
-                p("Player 1 ist an der Reihe");
-                p("Wähle ein Feld aus (1-9)");
-                XO = "X";
-                a = input.nextInt();
-            } else if (player1 == false) {
-                p("Player 2 ist an der Reihe");
-                p("Wähle ein Feld aus (1-9)");
-                XO = "O";
-                a = input.nextInt();
+        int field = 0, y, x;
+        char XO = ' ';
+        boolean win = false, player = true, switching = true, full = false;
+        CharField f = new CharField();
+        String winner = "";
+
+        //creates the Charfield
+        // for|
+        for (y = 0; y <= 4; y = y + 2) {
+            for (x = 1; x <= 4; x = x + 2) {
+                f.set(x, y, '|');
+            }
+        }
+        //for -
+        for (y = 1; y <= 4; y = y + 2) {
+            for (x = 0; x <= 4; x = x + 2) {
+                f.set(x, y, '-');
+            }
+        }
+        //for +
+        for (y = 1; y <= 4; y = y + 2) {
+            for (x = 1; x <= 4; x = x + 2) {
+                f.set(x, y, '+');
+            }
+        }
+        /*
+        //for numbers
+        for (int n='1';n<=9;n++){
+        for (y = 0; y <= 4; y = y + 2) {
+            for (x = 0; x <= 4; x = x + 2) {
+                char c=(char)n;
+                f.set(x, y, c);
+            }
+        }
+        }
+         */
+       
+        //print the field
+        p(f.toString(0, 0, 5, 5));
+
+        //playable
+        while (!win && !full) {
+            switching = true;
+            if (player == true) {
+                p("Player 1 ist an der Reihe.");
+                p("Wähle ein Feld aus (1-9).");
+                XO = 'X';
+                winner = "Spieler 1 ";
+                field = input.nextInt();
+            } else if (player == false) {
+                p("Player 2 ist an der Reihe.");
+                p("Wähle ein Feld aus (1-9).");
+                XO = 'O';
+                winner = "Spieler 2 ";
+                field = input.nextInt();
             }
 
-            //Setzen von XO für pl1 u pl2
-            if (a < 0 && a > 9) {
-                p("Dieses Feld ist nicht existent");
-                s = false;
+            //find the coordinates in the field
+            y = 0;
+            for (x = field; x > 3; x = x - 3) {
+                y++;
             }
-            int n = 0, y;
-            for (y = a; y > 3; y = y - 3) {
-                n++;
-            }
-            y = y - 1;
-            if (a >= 0 && a <= 9) {
-                if (" ".equals(Felder[n*2][y * 2])) {
-                    Felder[n*2][y * 2] = XO;
-                    printBorder(Felder);
+            x = x - 1;
+            //set X/O if allowed
+            if (field >= 1 && field <= 9) {
+                if (' ' == f.get(x * 2, y * 2)) {
+                    f.set(x * 2, y * 2, XO);
+                    p(f.toString(0, 0, 5, 5));
                 } else {
-                    p("Dieses Feld ist belegt");
-                    s = false;
+                    p("Dieses Feld ist belegt.");
+                    switching = false;
                 }
             } else {
-                p("Dieses Feld ist nicht existent");
-                s = false;
+                p("Dieses Feld ist nicht existent.");
+                switching = false;
             }
 
-            //Tauschen der Spieler
-            if (s == true) {
-                player1 = !player1;
+            //switch the players
+            if (switching == true) {
+                player = !player;
             }
-            //Kontrolle Sieg
-            for (int i = 0; i < 5; i = i + 2) {
-                if (Felder[i][0] == Felder[i][2] && Felder[i][0] == Felder[i][4] && Felder[i][0] != " ") {
+            //check win
+            for (x = 0; x < 5; x = x + 2) {
+                if (f.get(x, 0) == f.get(x, 2) && f.get(x, 0) == f.get(x, 4) && f.get(x, 0) != ' ') {
                     win = true;
-                    p("Es gibt einen Sieger");
+                    p(winner + "hat gewonnen.");
                 }
             }
-            for (int i = 0; i < 5; i = i + 2) {
-                if (Felder[0][i] == Felder[2][i] && Felder[0][i] == Felder[4][i] && Felder[0][i] != " ") {
+            for (y = 0; y < 5; y = y + 2) {
+                if (f.get(0, y) == f.get(2, y) && f.get(0, y) == f.get(4, y) && f.get(0, y) != ' ') {
                     win = true;
-                    p("Es gibt einen Sieger");
+                    p(winner + "hat gewonnen.");
                 }
             }
-            if (Felder[0][0] == Felder[2][2] && Felder[0][0] == Felder[4][4] && Felder[0][0] != " ") {
+            if (f.get(0, 0) == f.get(2, 2) && f.get(0, 0) == f.get(4, 4) && f.get(0, 0) != ' ') {
                 win = true;
-                p("Es gibt einen Sieger");
-            } else if (Felder[0][4] == Felder[2][2] && Felder[0][4] == Felder[4][0] && Felder[0][4] != " ") {
+                p(winner + "hat gewonnen");
+            } else if (f.get(0, 4) == f.get(2, 2) && f.get(0, 4) == f.get(4, 0) && f.get(0, 4) != ' ') {
                 win = true;
-                p("Es gibt einen Sieger");
+                p(winner + "hat gewonnen");
             }
-//wenn voll
-if (!win){
-belegt=true;
-  for (int i = 0; i < 5; i= i+2) {
-         for (int z = 0; z < 5; z=z+2) {
-               if(Felder[i][z]==" "){
-               belegt = false;
-               break;
-               }
+//check if full
+            if (!win) {
+                full = true;
+                for (x = 0; x <= 4; x = x + 2) {
+                    for (y = 0; y <= 4; y = y + 2) {
+                        if (f.get(x, y) == ' ') {
+                            full = false;
+                            break;
+                        }
+                    }
+                }
+                if (full) {
+                    p("Es gibt keinen Sieger.");
+                }
             }
-        }
-  if (belegt){
-      p("Es gibt keinen Sieger");
-  }
-}
-
-
         }
     }
 
-    private void printBorder(String[][] Felder) {
-        for (int i = 0; i < 5; i++) {
-            for (int z = 0; z < 5; z++) {
-                text.print(Felder[i][z]);
-            }
-            p("");
-        }
-    }
 }
