@@ -1,5 +1,6 @@
 package projectminigame;
 
+import Games.Connectfour;
 import printing.PrintingGame;
 import Games.Dicegame;
 import Games.Mathgame;
@@ -55,7 +56,8 @@ public class Menu {
             new TTT(),
             new Mathgame(),
             new Slotgame(),
-            new Dicegame()
+            new Dicegame(),
+            new Connectfour()
         };
         //set the game array
 		printingGames = tg;
