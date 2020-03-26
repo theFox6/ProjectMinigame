@@ -5,7 +5,7 @@ import printing.PrintingGame;
 public class Connectfour extends PrintingGame {
 
     public Connectfour() {
-        super("Schere Stein Papier");
+        super("4-gewinnt");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Connectfour extends PrintingGame {
         }
         // create field for number
         for (x = 0; x <= fieldsx; x++) {
-            System.out.print(numbers[x]);
+            text.print(numbers[x]);
         }
         p("");
 
@@ -71,7 +71,7 @@ public class Connectfour extends PrintingGame {
         // creates field for game
         for (y = 0; y <= fieldsy; y++) {
             for (x = 0; x <= fieldsx; x++) {
-                System.out.print(fields[y][x]);
+                text.print(fields[y][x]);
             }
             p("");
         }
@@ -105,13 +105,13 @@ public class Connectfour extends PrintingGame {
                     fields[height][width] = colour;
                     // creat field for numbers
                     for (x = 0; x <= fieldsx; x++) {
-                        System.out.print(numbers[x]);
+                        text.print(numbers[x]);
                     }
                     // create a new field
                     p("");
                     for (y = 0; y <= fieldsy; y++) {
                         for (x = 0; x <= fieldsx; x++) {
-                            System.out.print(fields[y][x]);
+                            text.print(fields[y][x]);
                         }
                         p("");
                     }
