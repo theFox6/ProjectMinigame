@@ -118,7 +118,7 @@ public class Connectfour extends PrintingGame {
                 width = input.nextInt();
                 width = (width - 1) * 2;
                 if (width < 0 || width > fieldsx || f.get(width, 0) != ' ') {
-                    p("Bitte wÃ¤hlen Sie eine gültige Reihe.");
+                    p("Bitte wählen Sie eine gültige Reihe.");
                 }
             } while (width < 0 || width > fieldsx || f.get(width, 0) != ' ');
 
