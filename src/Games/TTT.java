@@ -11,58 +11,91 @@ public class TTT extends PrintingGame {
 
     @Override
     public void run() {
-        int field = 0, y, x, n;
-        char XO = ' ';
+ 
+        /**
+         * deklaration 
+        */
+        int field = 0, y, x, n,RADIX;
+        char XO = ' ',ch;
         boolean win = false, player = true, switching = true, full = false;
         CharField f = new CharField();
         String winner = "";
         
-        //intruduction
+        /**
+         * creating the first Tic Tac Toe field so the player can see how the game works
+         * including the numbers one to nine 
+        */
+        
         p("Das Spiel ist wiefolgt aufgebaut:");
-        //creates the Charfields
-        //for numbers
+        
+        /**
+         * set the Charfield
+         * set |,+,- and numbers
+         */
+        
+        // for numbers
         n = 1;
         for (y = 0; y <= 4; y = y + 2) {
             for (x = 0; x <= 4; x = x + 2) {
-                final int RADIX = 10;
-                char ch = Character.forDigit(n, RADIX);
+                RADIX = 10;
+                ch = Character.forDigit(n, RADIX);
                 f.set(x, y, ch);
                 n++;
             }
         }
+        
         // for |
         for (y = 0; y <= 4; y = y + 2) {
             for (x = 1; x <= 4; x = x + 2) {
                 f.set(x, y, '|');
             }
         }
-        //for -
+        
+        // for -
         for (y = 1; y <= 4; y = y + 2) {
             for (x = 0; x <= 4; x = x + 2) {
                 f.set(x, y, '-');
             }
         }
-        //for +
+        
+        // for +
         for (y = 1; y <= 4; y = y + 2) {
             for (x = 1; x <= 4; x = x + 2) {
                 f.set(x, y, '+');
             }
         }
 
-        //print the field
+        /**
+         * printing the Charfield
+         */
         p(f.toString(0, 0, 5, 5));
         
-        //reset the numbers
+         /**
+         * clean the field 
+         * reset the numbers to ' ' 
+         */
         for (y = 0; y <= 4; y = y + 2) {
             for (x = 0; x <= 4; x = x + 2) {         
                 f.set(x, y,' ');
             }
         }
         
-
-        //playable
+        /**
+         * the real game 
+         * loop as long as no win and not full
+         */
         while (!win && !full) {
-            switching = true;
+            
+         /**
+         * loop until switching stays true
+         */
+            do {
+                 switching = true;
+                 
+             /**
+             * output for the user
+             * set the right arguments
+             */   
             if (player == true) {
                 p("Player 1 ist an der Reihe.");
                 p("Wähle ein Feld aus (1-9).");
@@ -76,14 +109,19 @@ public class TTT extends PrintingGame {
                 winner = "Spieler 2 ";
                 field = input.nextInt();
             }
-
-            //find the coordinates in the field
+            
+            /**
+            * find the coordinates in the field
+            */
             y = 0;
             for (x = field; x > 3; x = x - 3) {
                 y++;
             }
             x = x - 1;
-            //set X/O if allowed
+            
+            /*
+            * set X/O if allowed
+            */
             if (field >= 1 && field <= 9) {
                 if (' ' == f.get(x * 2, y * 2)) {
                     f.set(x * 2, y * 2, XO);
@@ -96,32 +134,45 @@ public class TTT extends PrintingGame {
                 p("Dieses Feld existiert nicht.");
                 switching = false;
             }
-
-            //switch the players
-            if (switching == true) {
-                player = !player;
-            }
-            //check win
-            for (x = 0; x < 5; x = x + 2) {
+            } while (switching == false);
+            
+            /**
+             * switch the players
+             */    
+            player = !player;
+            
+           /**
+            * check if there are three equal symols ihe same row
+            */
+           
+           // vertikal
+            for (x = 0; x <= 4; x = x + 2) {
                 if (f.get(x, 0) == f.get(x, 2) && f.get(x, 0) == f.get(x, 4) && f.get(x, 0) != ' ') {
                     win = true;
                     p(winner + "hat gewonnen.");
                 }
             }
-            for (y = 0; y < 5; y = y + 2) {
+            
+            // horizontal
+            for (y = 0; y <= 4; y = y + 2) {
                 if (f.get(0, y) == f.get(2, y) && f.get(0, y) == f.get(4, y) && f.get(0, y) != ' ') {
                     win = true;
                     p(winner + "hat gewonnen.");
                 }
             }
+            
+            // diagonal
             if (f.get(0, 0) == f.get(2, 2) && f.get(0, 0) == f.get(4, 4) && f.get(0, 0) != ' ') {
                 win = true;
-                p(winner + "hat gewonnen");
+                p(winner + "hat gewonnen.");
             } else if (f.get(0, 4) == f.get(2, 2) && f.get(0, 4) == f.get(4, 0) && f.get(0, 4) != ' ') {
                 win = true;
-                p(winner + "hat gewonnen");
+                p(winner + "hat gewonnen.");
             }
-            //check if full
+            
+            /**
+             * check if there is another possibility to set
+             */
             if (!win) {
                 full = true;
                 for (x = 0; x <= 4; x = x + 2) {
