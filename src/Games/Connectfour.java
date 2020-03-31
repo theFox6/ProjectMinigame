@@ -32,7 +32,7 @@ public class Connectfour extends PrintingGame {
             p("Wieviele Felder wollen Sie in Y-Richtung?");
             fieldsy = input.nextInt();
             if (fieldsx < 4 || fieldsy < 4) {
-                p("Bitte wÃ¤hlen Sie mindestens 4x4!");
+                p("Bitte wählen Sie mindestens 4x4!");
             }
         } while (fieldsx < 4 || fieldsy < 4);
 
@@ -118,7 +118,7 @@ public class Connectfour extends PrintingGame {
                 width = input.nextInt();
                 width = (width - 1) * 2;
                 if (width < 0 || width > fieldsx || f.get(width, 0) != ' ') {
-                    p("Bitte wÃ¤hlen Sie eine gÃ¼ltige Reihe.");
+                    p("Bitte wÃ¤hlen Sie eine gültige Reihe.");
                 }
             } while (width < 0 || width > fieldsx || f.get(width, 0) != ' ');
 
@@ -329,7 +329,7 @@ public class Connectfour extends PrintingGame {
              * end game
              */
             if (n != 4) {
-                p("Spätestens jetz besthet keine  MÃ¶glichkeit mehr um zu gewinnen.");
+                p("Spätestens jetzt besteht keine  Möglichkeit mehr, um zu gewinnen.");
                 stop = true;
             }
 
