@@ -329,7 +329,7 @@ public class Connectfour extends PrintingGame {
              * end game
              */
             if (n != 4) {
-                p("Spätestens jetzt besteht keine  Möglichkeit mehr, um zu gewinnen.");
+                p("Spätestens jetzt besteht keine  Möglichkeit mehr zu gewinnen.");
                 stop = true;
             }
 
