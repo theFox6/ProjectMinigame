@@ -13,7 +13,7 @@ public class TTT extends PrintingGame {
     public void run() {
  
         /**
-         * deklaration 
+         * deklaration and initialization
         */
         int field = 0, y, x, n,RADIX;
         char XO = ' ',ch;
