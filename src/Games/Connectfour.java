@@ -19,8 +19,8 @@ public class Connectfour extends PrintingGame {
         CharField g = new CharField();
         char colour = ' ', first = 't', n2;
         String playername = "";
-        Boolean win = false, player = true, stop = false;
-        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10;
+        Boolean win = false, player = true, stop = false, allowed = true, full = false;
+        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10, z, play = 0;
 
         /**
          * set size loop until size is 4x4 or higher
@@ -44,7 +44,8 @@ public class Connectfour extends PrintingGame {
         p("");
 
         /**
-         * set the Charfield set numbers
+         * set the Charfield 
+         * set numbers
          */
         n = 1;
         y = 0;
@@ -88,16 +89,18 @@ public class Connectfour extends PrintingGame {
         p("");
 
         /**
-         * the real game loop as long as no win and chance to win (stop)
+         * the real game 
+         * loop as long as no win and chance to win (stop)
          */
-        while (!win && !stop) {
+        while (!win && !stop && !full) {
 
             /**
              * loop until ture argument
              */
             do {
                 /**
-                 * output for the user set the right arguments
+                 * output for the user 
+                 * set the right arguments
                  */
                 if (player) {
                     p("Spieler 1 ist an der Reihe.");
@@ -112,7 +115,8 @@ public class Connectfour extends PrintingGame {
                 }
 
                 /**
-                 * set the row to set set width to fit in the Charfiled
+                 * set the row 
+                 * set width to fit in the Charfiled
                  */
                 p("In welche Reihe wollen Sie setzen?");
                 width = input.nextInt();
@@ -123,7 +127,8 @@ public class Connectfour extends PrintingGame {
             } while (width < 0 || width > fieldsx || f.get(width, 0) != ' ');
 
             /**
-             * determine the height of each chip print CHarfield agein
+             * determine the height of each chip 
+             * print Charfield again
              */
             for (height = fieldsy; height >= 0; height = height - 2) {
                 if (f.get(width, height) == ' ') {
@@ -137,7 +142,8 @@ public class Connectfour extends PrintingGame {
                 }
             }
             /**
-             * check if there are 4 in a row controll win
+             * check if there are 4 in a row 
+             * controll win
              */
 
             // x = width
@@ -159,7 +165,7 @@ public class Connectfour extends PrintingGame {
             // y = height
             if (!win) {
                 n = 0;
-                for (x = 0; x <= fieldsx; x = x + 2) {
+                for (x = width - (3 * 2); x <= width + (3 * 2); x = x + 2) {
                     if (f.get(x, height) == colour) {
                         n++;
                     } else {
@@ -223,19 +229,50 @@ public class Connectfour extends PrintingGame {
                 }
             }
 
-            /**
-             * control for a possibile win if 4 can be placed in a row in future
-             * method needs upgrade
-             */
-            /**
-             * check hozizontal for the fist 4 rows
-             */
-            if (!win) {
-                for (y = 0; y <= 3 * 2; y = y + 2) {
-                    for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
+            if (allowed) {
+                /**
+                 * possibile win if 4 can be placed in a row in future 
+                 * method needs upgrade
+                 */
+                
+                /**
+                 * check hozizontal for the fist 2 rows
+                 */
+                if (!win) {
+                    for (y = 0; y <= 2; y = y + 2) {
+                        for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
+                            first = 't';
+                            n = 0;
+                            for (x = w; x <= w + (3 * 2); x = x + 2) {
+                                if (first == 't' && f.get(x, y) != ' ') {
+                                    first = f.get(x, y);
+                                }
+                                if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                    n++;
+                                } else {
+                                    break;
+                                }
+                            }
+                            if (n == 4) {
+                                break;
+                            }
+                        }
+                        if (n == 4) {
+                            break;
+                        }
+                    }
+                }
+
+                /**
+                 * x = variabel 
+                 * check for every vertikal row only for the first 4
+                 *
+                 */
+                if (!win && n != 4) {
+                    for (x = 0; x <= fieldsx; x = x + 2) {
                         first = 't';
                         n = 0;
-                        for (x = w; x <= w + (3 * 2); x = x + 2) {
+                        for (y = 0; y <= 3 * 2; y = y + 2) {
                             if (first == 't' && f.get(x, y) != ' ') {
                                 first = f.get(x, y);
                             }
@@ -249,92 +286,97 @@ public class Connectfour extends PrintingGame {
                             break;
                         }
                     }
-                    if (n == 4) {
-                        break;
+                }
+
+                /**
+                 * -x 
+                 * check for 2 diagonal row
+                 */
+                if (!win && n != 4) {
+                    for (z = 0; z <= 2 && z <= fieldsy - (3 * 2); z = z + 2) {
+                        for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
+                            y = z;
+                            first = 't';
+                            n = 0;
+                            for (x = w; x <= w + (3 * 2); x = x + 2) {
+                                if (first == 't' && f.get(x, y) != ' ') {
+                                    first = f.get(x, y);
+                                }
+                                if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                    n++;
+                                } else {
+                                    break;
+                                }
+                                y = y + 2;
+                            }
+                            if (n == 4) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                /**
+                 * x
+                 * check for 2 diagonal row
+                 */
+                if (!win && n != 4) {
+                    for (z = 0; z <= 2 && z <= fieldsy - (3 * 2); z = z + 2) {
+                        for (w = fieldsx; w >= 0 + (3 * 2); w = w - 2) {
+                            y = z;
+                            first = 't';
+                            n = 0;
+                            for (x = w; x >= w - (3 * 2); x = x - 2) {
+                                if (first == 't' && f.get(x, y) != ' ') {
+                                    first = f.get(x, y);
+                                }
+                                if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                    n++;
+                                } else {
+                                    break;
+                                }
+                                y = y + 2;
+                            }
+                            if (n == 4) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                /**
+                 * end game 
+                 * continue until full
+                 */
+                if (n != 4) {
+                    p("Spätestens jetzt besteht keine  Möglichkeit mehr zu gewinnen.");
+                    do {
+                        p("Wollen Sie dennoch weiterspielen? (1 für ja / 2 für nein)");
+                        play = input.nextInt();
+                    } while (play < 1 || play > 2);
+                    if (play == 1) {
+                        allowed = false;
+                    } else {
+                        stop = true;
                     }
                 }
             }
-
             /**
-             * x = variabel check for every vertikal row only for the first 4
+             * check if the field is full
              */
-            if (!win && n != 4) {
+            if (!allowed) {
+                full = true;
                 for (x = 0; x <= fieldsx; x = x + 2) {
-                    first = 't';
-                    n = 0;
-                    for (y = 0; y <= 3 * 2; y = y + 2) {
-                        if (first == 't' && f.get(x, y) != ' ') {
-                            first = f.get(x, y);
-                        }
-                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
-                            n++;
-                        } else {
+                    for (y = 0; y <= fieldsy; y = y + 2) {
+                        if (f.get(x, y) == ' ') {
+                            full = false;
                             break;
                         }
                     }
-                    if (n == 4) {
-                        break;
-                    }
                 }
-            }
-
-            /**
-             * -x check for every diagonl row
-             */
-            if (!win && n != 4) {
-                for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
-                    y = 0;
-                    first = 't';
-                    n = 0;
-                    for (x = w; x <= w + (3 * 2); x = x + 2) {
-                        if (first == 't' && f.get(x, y) != ' ') {
-                            first = f.get(x, y);
-                        }
-                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
-                            n++;
-                        } else {
-                            break;
-                        }
-                        y = y + 2;
-                    }
-                    if (n == 4) {
-                        break;
-                    }
+                if (full) {
+                    p("Das Feld ist voll.");
                 }
-            }
-
-            /**
-             * x
-             * check for every diagonl row
-             */
-            if (!win && n != 4) {
-                for (w = fieldsx; w >= 0 + (3 * 2); w = w - 2) {
-                    y = 0;
-                    first = 't';
-                    n = 0;
-                    for (x = w; x >= w - (3 * 2); x = x - 2) {
-                        if (first == 't' && f.get(x, y) != ' ') {
-                            first = f.get(x, y);
-                        }
-                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
-                            n++;
-                        } else {
-                            break;
-                        }
-                        y = y + 2;
-                    }
-                    if (n == 4) {
-                        break;
-                    }
-                }
-            }
-
-            /**
-             * end game
-             */
-            if (n != 4) {
-                p("Spätestens jetzt besteht keine  Möglichkeit mehr zu gewinnen.");
-                stop = true;
             }
 
             /**
