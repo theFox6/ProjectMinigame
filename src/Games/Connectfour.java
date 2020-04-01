@@ -174,7 +174,7 @@ public class Connectfour extends PrintingGame {
             }
 
             // x
-            if (!win && height <= fieldsy - (3 * 2)) {
+            if (!win) {
                 x = width;
                 y = height;
                 n = 0;
@@ -199,7 +199,7 @@ public class Connectfour extends PrintingGame {
             }
 
             // -x
-            if (!win && height <= fieldsy - (3 * 2)) {
+            if (!win) {
                 x = width;
                 y = height;
                 n = 0;
@@ -225,23 +225,27 @@ public class Connectfour extends PrintingGame {
 
             /**
              * control for a possibile win if 4 can be placed in a row in future
+             * method needs upgrade
              */
             /**
-             * y = 0
-             * it is the only horizontal row to check
+             * check hozizontal for the fist 4 rows
              */
             if (!win) {
-                y = 0;
-                for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
-                    first = 't';
-                    n = 0;
-                    for (x = w; x <= w + (3 * 2); x = x + 2) {
-                        if (first == 't' && f.get(x, y) != ' ') {
-                            first = f.get(x, y);
+                for (y = 0; y <= 3 * 2; y = y + 2) {
+                    for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
+                        first = 't';
+                        n = 0;
+                        for (x = w; x <= w + (3 * 2); x = x + 2) {
+                            if (first == 't' && f.get(x, y) != ' ') {
+                                first = f.get(x, y);
+                            }
+                            if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                n++;
+                            } else {
+                                break;
+                            }
                         }
-                        if (f.get(x, y) == ' ' || f.get(x, y) == first) {
-                            n++;
-                        } else {
+                        if (n == 4) {
                             break;
                         }
                     }
