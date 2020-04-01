@@ -83,8 +83,12 @@ public class ProjectMinigame extends JFrame implements Runnable, PanelManager {
 		//setup the menu and run it
         menu = new Menu(gm, this);
 		menu.runStream();
+		// stop running games in case any are stuck
+		gm.terminate();
         // close the window
         dispose();
+        // close the program
+        System.exit(0);
     }
 
     @Override

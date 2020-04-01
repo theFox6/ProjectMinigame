@@ -4,9 +4,12 @@ import painting.GamePanel;
 import printing.PrintingGame;
 import painting.PaintingGame;
 import painting.Paintable;
+
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class GameManager implements KeyListener,Paintable,Runnable {
     
@@ -18,6 +21,8 @@ public class GameManager implements KeyListener,Paintable,Runnable {
     private Thread gameThread;
     private int FPS = 60;
     private long targetTime = 1000 / FPS;
+    
+	private Set<Class<? extends PaintingGame>> slowGames = new LinkedHashSet<>();
     
     public GameManager(PanelManager pm) {
     	this.pm = pm;
@@ -99,8 +104,14 @@ public class GameManager implements KeyListener,Paintable,Runnable {
                 elapsed = System.nanoTime() - start;
 
                 wait = targetTime - elapsed / 1000000;
-                if (wait < 0)
-                        wait = 5;
+                if (wait < 0) {
+                	Class<? extends PaintingGame> slowClass = currentG.getClass(); 
+                	if (!slowGames.contains(slowClass)) {
+                		slowGames.add(slowClass);
+                		System.err.println(slowClass.getName() + " is running too slow.");
+                	}
+                    wait = 5;
+                }
 
                 try {
                         Thread.sleep(wait);
