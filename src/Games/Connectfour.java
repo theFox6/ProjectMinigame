@@ -62,7 +62,7 @@ public class Connectfour extends PrintingGame {
         }
 
         /**
-         * printing the Charfield
+         * show the Charfield
          */
         text.print(g.toString(0, 0, fieldsx + 1, 1));
 
@@ -135,13 +135,13 @@ public class Connectfour extends PrintingGame {
 
             /**
              * determine the height of each chip
-             * print Charfield again
+             * show Charfield again
              */
             for (height = fieldsy; height >= 0; height = height - 2) {
                 if (f.get(width, height) == ' ') {
                     // set the chip
                     f.set(width, height, color);
-                    // print the Charfield
+                    // show the Charfield
                     text.print(g.toString(0, 0, fieldsx + 1, 1));
                     text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
                     p("");
