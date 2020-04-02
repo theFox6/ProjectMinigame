@@ -273,7 +273,8 @@ public class Connectfour extends PrintingGame {
 
                 /**
                  * x = variabel 
-                 * check for every vertikal row only for the first 4
+                 * check for every vertikal row 
+                 * only for the first 4
                  */
                 if (!win && n != 4) {
                     for (x = 0; x <= fieldsx; x = x + 2) {
