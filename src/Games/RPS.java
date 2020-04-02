@@ -23,7 +23,7 @@ public class RPS extends PrintingGame {
             p("Für Schere: 1");
             p("Für Stein: 2");
             p("Für Papier: 3");
-            p("Wählen Sie eine der folgenenden Optionen.");
+            p("Wählen Sie eine der Optionen.");
             opt = input.nextInt();
             if (opt < 1 || opt > 3){
             p("Diese Optionen existiert nicht.");
