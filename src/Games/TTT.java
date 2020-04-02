@@ -98,12 +98,14 @@ public class TTT extends PrintingGame {
              */   
             if (player == true) {
                 p("Player 1 ist an der Reihe.");
+                p("Sie haben X.");
                 p("Wähle ein Feld aus (1-9).");
                 XO = 'X';
                 winner = "Spieler 1 ";
                 field = input.nextInt();
             } else if (player == false) {
                 p("Player 2 ist an der Reihe.");
+                p("Sie haben O.");
                 p("Wähle ein Feld aus (1-9).");
                 XO = 'O';
                 winner = "Spieler 2 ";
