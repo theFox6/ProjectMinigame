@@ -17,10 +17,10 @@ public class Connectfour extends PrintingGame {
          */
         CharField f = new CharField();
         CharField g = new CharField();
-        char colour = ' ', first = 't', n2;
+        char color = ' ', first = 't', n2;
         String playername = "";
         Boolean win = false, player = true, stop = false, allowed = true, full = false;
-        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10, z, play = 0, rounds = 0, fieldsP;
+        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10, z, play = 0, turns = 0, fieldsP;
 
         /**
          * set size 
@@ -67,7 +67,7 @@ public class Connectfour extends PrintingGame {
         text.print(g.toString(0, 0, fieldsx + 1, 1));
 
         /**
-         * set the Charfield set |,+,-
+         * put |,+,- into the Charfild
          */
         // for |
         for (y = 0; y <= fieldsy; y = y + 2) {
@@ -89,16 +89,17 @@ public class Connectfour extends PrintingGame {
         }
 
         /**
-         * printing the other Charfield
+         * show other Charfield
          */
         text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
         p("");
 
         /**
-         * the real game loop as long as no win and chance to win (stop)
+         * the real game 
+         * loop as long as no win and chance to win (stop)
          */
         while (!win && !stop && !full) {
-            rounds++;
+            turns++;
 
             /**
              * loop until ture argument
@@ -111,12 +112,12 @@ public class Connectfour extends PrintingGame {
                 if (player) {
                     p("Spieler 1 ist an der Reihe.");
                     p("Sie haben O.");
-                    colour = 'O';
+                    color = 'O';
                     playername = "Spieler 1";
                 } else if (!player) {
                     p("Spieler 2 ist an der Reihe.");
                     p("Sie haben X.");
-                    colour = 'X';
+                    color = 'X';
                     playername = "Spieler 2";
                 }
 
@@ -139,7 +140,7 @@ public class Connectfour extends PrintingGame {
             for (height = fieldsy; height >= 0; height = height - 2) {
                 if (f.get(width, height) == ' ') {
                     // set the chip
-                    f.set(width, height, colour);
+                    f.set(width, height, color);
                     // print the Charfield
                     text.print(g.toString(0, 0, fieldsx + 1, 1));
                     text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
@@ -151,12 +152,12 @@ public class Connectfour extends PrintingGame {
              * check if there are 4 in a row
              * controll win
              */
-            if (rounds >= 7) {
+            if (turns >= 7) {
                 // x = width
                 if (height <= fieldsy - (3 * 2)) {
                     n = 0;
                     for (y = height; y <= height + (3 * 2); y = y + 2) {
-                        if (f.get(width, y) == colour) {
+                        if (f.get(width, y) == color) {
                             n++;
                         } else {
                             break;
@@ -172,7 +173,7 @@ public class Connectfour extends PrintingGame {
                 if (!win) {
                     n = 0;
                     for (x = width - (3 * 2); x <= width + (3 * 2); x = x + 2) {
-                        if (f.get(x, height) == colour) {
+                        if (f.get(x, height) == color) {
                             n++;
                         } else {
                             n = 0;
@@ -195,7 +196,7 @@ public class Connectfour extends PrintingGame {
                         y = y + 2;
                     }
                     while (x <= fieldsx && y >= 0) {
-                        if (f.get(x, y) == colour) {
+                        if (f.get(x, y) == color) {
                             n++;
                         } else {
                             n = 0;
@@ -220,7 +221,7 @@ public class Connectfour extends PrintingGame {
                         y = y + 2;
                     }
                     while (x >= 0 && y >= 0) {
-                        if (f.get(x, y) == colour) {
+                        if (f.get(x, y) == color) {
                             n++;
                         } else {
                             n = 0;
@@ -370,7 +371,7 @@ public class Connectfour extends PrintingGame {
             /**
              * check if the field is full
              */
-            if (!allowed && rounds == fieldsP) {
+            if (!allowed && turns == fieldsP) {
                 full = true;
                 p("Das Feld ist voll.");
             }
