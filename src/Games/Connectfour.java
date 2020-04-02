@@ -13,17 +13,18 @@ public class Connectfour extends PrintingGame {
     public void run() {
 
         /**
-         * deklaration initalization
+         * deklaration and initalization
          */
         CharField f = new CharField();
         CharField g = new CharField();
         char colour = ' ', first = 't', n2;
         String playername = "";
         Boolean win = false, player = true, stop = false, allowed = true, full = false;
-        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10, z, play = 0;
+        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10, z, play = 0, rounds = 0, fieldsP;
 
         /**
-         * set size loop until size is 4x4 or higher
+         * set size 
+         * loop until size is 4x4 or higher
          */
         do {
             p("Wieviele Felder wollen Sie in X-Richtung?");
@@ -35,6 +36,11 @@ public class Connectfour extends PrintingGame {
                 p("Bitte wählen Sie mindestens 4x4!");
             }
         } while (fieldsx < 4 || fieldsy < 4);
+
+        /**
+         * multiplicate to find the max on fields
+         */
+        fieldsP = fieldsy * fieldsx;
 
         /**
          * change fieldsx and fieldsy so they fit in the Charfield
@@ -89,10 +95,10 @@ public class Connectfour extends PrintingGame {
         p("");
 
         /**
-         * the real game 
-         * loop as long as no win and chance to win (stop)
+         * the real game loop as long as no win and chance to win (stop)
          */
         while (!win && !stop && !full) {
+            rounds++;
 
             /**
              * loop until ture argument
@@ -115,7 +121,7 @@ public class Connectfour extends PrintingGame {
                 }
 
                 /**
-                 * set the row 
+                 * set the row
                  * set width to fit in the Charfiled
                  */
                 p("In welche Reihe wollen Sie setzen?");
@@ -127,7 +133,7 @@ public class Connectfour extends PrintingGame {
             } while (width < 0 || width > fieldsx || f.get(width, 0) != ' ');
 
             /**
-             * determine the height of each chip 
+             * determine the height of each chip
              * print Charfield again
              */
             for (height = fieldsy; height >= 0; height = height - 2) {
@@ -142,99 +148,100 @@ public class Connectfour extends PrintingGame {
                 }
             }
             /**
-             * check if there are 4 in a row 
+             * check if there are 4 in a row
              * controll win
              */
-
-            // x = width
-            if (height <= fieldsy - (3 * 2)) {
-                n = 0;
-                for (y = height; y <= height + (3 * 2); y = y + 2) {
-                    if (f.get(width, y) == colour) {
-                        n++;
-                    } else {
-                        break;
-                    }
-                }
-                if (n == 4) {
-                    p(playername + " hat gewonnen.");
-                    win = true;
-                }
-            }
-
-            // y = height
-            if (!win) {
-                n = 0;
-                for (x = width - (3 * 2); x <= width + (3 * 2); x = x + 2) {
-                    if (f.get(x, height) == colour) {
-                        n++;
-                    } else {
-                        n = 0;
+            if (rounds >= 7) {
+                // x = width
+                if (height <= fieldsy - (3 * 2)) {
+                    n = 0;
+                    for (y = height; y <= height + (3 * 2); y = y + 2) {
+                        if (f.get(width, y) == colour) {
+                            n++;
+                        } else {
+                            break;
+                        }
                     }
                     if (n == 4) {
                         p(playername + " hat gewonnen.");
                         win = true;
-                        break;
+                    }
+                }
+
+                // y = height
+                if (!win) {
+                    n = 0;
+                    for (x = width - (3 * 2); x <= width + (3 * 2); x = x + 2) {
+                        if (f.get(x, height) == colour) {
+                            n++;
+                        } else {
+                            n = 0;
+                        }
+                        if (n == 4) {
+                            p(playername + " hat gewonnen.");
+                            win = true;
+                            break;
+                        }
+                    }
+                }
+
+                // x
+                if (!win) {
+                    x = width;
+                    y = height;
+                    n = 0;
+                    while (x >= 0 + 2 && y <= fieldsy - 2) {
+                        x = x - 2;
+                        y = y + 2;
+                    }
+                    while (x <= fieldsx && y >= 0) {
+                        if (f.get(x, y) == colour) {
+                            n++;
+                        } else {
+                            n = 0;
+                        }
+                        if (n == 4) {
+                            p(playername + " hat gewonnen.");
+                            win = true;
+                            break;
+                        }
+                        x = x + 2;
+                        y = y - 2;
+                    }
+                }
+
+                // -x
+                if (!win) {
+                    x = width;
+                    y = height;
+                    n = 0;
+                    while (x <= fieldsx - 2 && y <= fieldsy - 2) {
+                        x = x + 2;
+                        y = y + 2;
+                    }
+                    while (x >= 0 && y >= 0) {
+                        if (f.get(x, y) == colour) {
+                            n++;
+                        } else {
+                            n = 0;
+                        }
+                        if (n == 4) {
+                            p(playername + " hat gewonnen.");
+                            win = true;
+                            break;
+                        }
+                        x = x - 2;
+                        y = y - 2;
                     }
                 }
             }
 
-            // x
-            if (!win) {
-                x = width;
-                y = height;
-                n = 0;
-                while (x >= 0 + 2 && y <= fieldsy - 2) {
-                    x = x - 2;
-                    y = y + 2;
-                }
-                while (x <= fieldsx && y >= 0) {
-                    if (f.get(x, y) == colour) {
-                        n++;
-                    } else {
-                        n = 0;
-                    }
-                    if (n == 4) {
-                        p(playername + " hat gewonnen.");
-                        win = true;
-                        break;
-                    }
-                    x = x + 2;
-                    y = y - 2;
-                }
-            }
-
-            // -x
-            if (!win) {
-                x = width;
-                y = height;
-                n = 0;
-                while (x <= fieldsx - 2 && y <= fieldsy - 2) {
-                    x = x + 2;
-                    y = y + 2;
-                }
-                while (x >= 0 && y >= 0) {
-                    if (f.get(x, y) == colour) {
-                        n++;
-                    } else {
-                        n = 0;
-                    }
-                    if (n == 4) {
-                        p(playername + " hat gewonnen.");
-                        win = true;
-                        break;
-                    }
-                    x = x - 2;
-                    y = y - 2;
-                }
-            }
-
+            /**
+             * possibile win if 4 can be placed in a row 
+             * in future method needs upgrade
+             */
             if (allowed) {
-                /**
-                 * possibile win if 4 can be placed in a row in future 
-                 * method needs upgrade
-                 */
-                
+
                 /**
                  * check hozizontal for the fist 2 rows
                  */
@@ -266,7 +273,6 @@ public class Connectfour extends PrintingGame {
                 /**
                  * x = variabel 
                  * check for every vertikal row only for the first 4
-                 *
                  */
                 if (!win && n != 4) {
                     for (x = 0; x <= fieldsx; x = x + 2) {
@@ -345,8 +351,8 @@ public class Connectfour extends PrintingGame {
                 }
 
                 /**
-                 * end game 
-                 * continue until full
+                 * end game
+                 * or continue until full
                  */
                 if (n != 4) {
                     p("Spätestens jetzt besteht keine  Möglichkeit mehr zu gewinnen.");
@@ -364,19 +370,9 @@ public class Connectfour extends PrintingGame {
             /**
              * check if the field is full
              */
-            if (!allowed) {
+            if (!allowed && rounds == fieldsP) {
                 full = true;
-                for (x = 0; x <= fieldsx; x = x + 2) {
-                    for (y = 0; y <= fieldsy; y = y + 2) {
-                        if (f.get(x, y) == ' ') {
-                            full = false;
-                            break;
-                        }
-                    }
-                }
-                if (full) {
-                    p("Das Feld ist voll.");
-                }
+                p("Das Feld ist voll.");
             }
 
             /**
