@@ -1,298 +1,385 @@
 package Games;
 
+import printing.CharField;
 import printing.PrintingGame;
 
 public class Connectfour extends PrintingGame {
 
     public Connectfour() {
-        super("Schere Stein Papier");
+        super("4-gewinnt");
     }
 
     @Override
     public void run() {
-        Boolean win = false, player = true, abr = false;
-        String colour = "", first = "none";
-        int width = 0, n, height = 0, y, x, w, fieldsx = 0, fieldsy = 0;
-        // set size
+
+        /**
+         * deklaration and initalization
+         */
+        CharField f = new CharField();
+        CharField g = new CharField();
+        char color = ' ', first = 't', n2;
+        String playername = "";
+        Boolean win = false, player = true, stop = false, allowed = true, full = false;
+        int width = 0, n = 0, height = 0, y, x, w, fieldsx = 0, fieldsy = 0, RADIX = 10, z, play = 0, turns = 0, fieldsP;
+
+        /**
+         * set size 
+         * loop until size is 4x4 or higher
+         */
         do {
-            p("Wieviele Fields wollen Sie in X-Richtung");
+            p("Wieviele Felder wollen Sie in X-Richtung?");
+            p("(Die Zahlen werden nur bis 9 gelistet)");
             fieldsx = input.nextInt();
-            p("Wieviele Fields wollen Sie in Y-Richtung");
+            p("Wieviele Felder wollen Sie in Y-Richtung?");
             fieldsy = input.nextInt();
             if (fieldsx < 4 || fieldsy < 4) {
-                p("Bitte wÃ¤hlen Sie mindestens 4x4 ");
+                p("Bitte wählen Sie mindestens 4x4!");
             }
         } while (fieldsx < 4 || fieldsy < 4);
+
+        /**
+         * multiplicate to find the max on fields
+         */
+        fieldsP = fieldsy * fieldsx;
+
+        /**
+         * change fieldsx and fieldsy so they fit in the Charfield
+         */
         fieldsx = (fieldsx - 1) * 2;
         fieldsy = (fieldsy - 1) * 2;
-        // create Field for Numbers
-        String[] numbers = new String[fieldsx + 1];
-        // for " "
-        for (x = 1; x <= fieldsx; x = x + 2) {
-            numbers[x] = " ";
-        }
-        // for number
-        n = 1;
-        for (x = 0; x <= fieldsx; x = x + 2) {
-            numbers[x] = String.valueOf(n);
-            n++;
-        }
-        // create field for number
-        for (x = 0; x <= fieldsx; x++) {
-            System.out.print(numbers[x]);
-        }
         p("");
 
-        String[][] fields = new String[fieldsy + 1][fieldsx + 1];
+        /**
+         * set the Charfield 
+         * set numbers
+         */
+        n = 1;
+        y = 0;
+        for (x = 0; x <= fieldsx; x = x + 2) {
+            n2 = Character.forDigit(n, RADIX);
+            g.set(x, y, n2);
+            n++;
+        }
+
+        /**
+         * show the Charfield
+         */
+        text.print(g.toString(0, 0, fieldsx + 1, 1));
+
+        /**
+         * put |,+,- into the Charfild
+         */
         // for |
-        for (x = 1; x <= fieldsx; x = x + 2) {
-            for (y = 0; y <= fieldsy; y = y + 2) {
-                fields[y][x] = "|";
+        for (y = 0; y <= fieldsy; y = y + 2) {
+            for (x = 1; x <= fieldsx; x = x + 2) {
+                f.set(x, y, '|');
             }
         }
-        // for -
-        for (x = 0; x <= fieldsx; x = x + 2) {
-            for (y = 1; y <= fieldsy; y = y + 2) {
-                fields[y][x] = "-";
+        //for -
+        for (y = 1; y <= fieldsy; y = y + 2) {
+            for (x = 0; x <= fieldsx; x = x + 2) {
+                f.set(x, y, '-');
             }
         }
-        // for +
-        for (x = 1; x <= fieldsx; x = x + 2) {
-            for (y = 1; y <= fieldsy; y = y + 2) {
-                fields[y][x] = "+";
+        //for +
+        for (y = 1; y <= fieldsy; y = y + 2) {
+            for (x = 1; x <= fieldsx; x = x + 2) {
+                f.set(x, y, '+');
             }
         }
-        // for " "
-        for (x = 0; x <= fieldsx; x = x + 2) {
-            for (y = 0; y <= fieldsy; y = y + 2) {
-                fields[y][x] = " ";
-            }
-        }
-        // creates field for game
-        for (y = 0; y <= fieldsy; y++) {
-            for (x = 0; x <= fieldsx; x++) {
-                System.out.print(fields[y][x]);
-            }
-            p("");
-        }
-        // the Game
-        while (!win && !abr) {
-            // set the line/row
+
+        /**
+         * show other Charfield
+         */
+        text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
+        p("");
+
+        /**
+         * the real game 
+         * loop as long as no win and chance to win (stop)
+         */
+        while (!win && !stop && !full) {
+            turns++;
+
+            /**
+             * loop until ture argument
+             */
             do {
+                /**
+                 * output for the user 
+                 * set the right arguments
+                 */
                 if (player) {
-                    p("");
-                    p("Spieler 1 ist an der Reihe ");
-                    p("Sie haben O");
-                    colour = "O";
+                    p("Spieler 1 ist an der Reihe.");
+                    p("Sie haben O.");
+                    color = 'O';
+                    playername = "Spieler 1";
                 } else if (!player) {
-                    p("");
-                    p("Spieler 2 ist an der Reihe ");
-                    p("Sie haben X");
-                    colour = "X";
+                    p("Spieler 2 ist an der Reihe.");
+                    p("Sie haben X.");
+                    color = 'X';
+                    playername = "Spieler 2";
                 }
-                p("In welche Reihe wollen Sie setzen");
+
+                /**
+                 * set the row
+                 * set width to fit in the Charfiled
+                 */
+                p("In welche Reihe wollen Sie setzen?");
                 width = input.nextInt();
                 width = (width - 1) * 2;
-
-                if (width < 0 || width > fieldsx || fields[0][width] != " ") {
-                    p("Bitte wÃ¤hlen Sie eine gÃ¼ltige Reihe");
+                if (width < 0 || width > fieldsx || f.get(width, 0) != ' ') {
+                    p("Bitte wählen Sie eine gültige Reihe.");
                 }
-            } while (width < 0 || width > fieldsx || fields[0][width] != " ");
-            // determine the height of each chip
+            } while (width < 0 || width > fieldsx || f.get(width, 0) != ' ');
+
+            /**
+             * determine the height of each chip
+             * show Charfield again
+             */
             for (height = fieldsy; height >= 0; height = height - 2) {
-                if (fields[height][width] == " ") {
+                if (f.get(width, height) == ' ') {
                     // set the chip
-                    fields[height][width] = colour;
-                    // creat field for numbers
-                    for (x = 0; x <= fieldsx; x++) {
-                        System.out.print(numbers[x]);
-                    }
-                    // create a new field
+                    f.set(width, height, color);
+                    // show the Charfield
+                    text.print(g.toString(0, 0, fieldsx + 1, 1));
+                    text.print(f.toString(0, 0, fieldsx + 1, fieldsy + 1));
                     p("");
-                    for (y = 0; y <= fieldsy; y++) {
-                        for (x = 0; x <= fieldsx; x++) {
-                            System.out.print(fields[y][x]);
-                        }
-                        p("");
-                    }
                     break;
                 }
             }
-//check win
-            // x=width
-            if (height <= fieldsy - (3 * 2)) {
-                n = 0;
-                for (y = height; y <= height + (3 * 2); y = y + 2) {
-                    if (fields[y][width] == colour) {
-                        n++;
-                    } else {
-                        break;
-                    }
-                }
-                if (n == 4) {
-                    p("Es gibt einen Sieger");
-                    win = true;
-                }
-            }
-            // y=height
-            if (!win) {
-                n = 0;
-                for (x = 0; x <= fieldsx; x = x + 2) {
-                    if (fields[height][x] == colour) {
-                        n++;
-                    } else {
-                        n = 0;
-                    }
-                    if (n == 4) {
-                        p("Es gibt einen Sieger");
-                        win = true;
-                        break;
-                    }
-                }
-            }
-            // x
-            if (!win && height <= fieldsy - (3 * 2)) {
-                x = width;
-                y = height;
-                n = 0;
-                while (x >= 0 + 2 && y <= fieldsy - 2) {
-                    x = x - 2;
-                    y = y + 2;
-                }
-                while (x <= fieldsx && y >= 0) {
-                    if (fields[y][x] == colour) {
-                        n++;
-                    } else {
-                        n = 0;
-                    }
-                    if (n == 4) {
-                        p("Es gibt einen Sieger");
-                        win = true;
-                        break;
-                    }
-                    x = x + 2;
-                    y = y - 2;
-                }
-            }
-            // -x
-            if (!win && height <= fieldsy - (3 * 2)) {
-                x = width;
-                y = height;
-                n = 0;
-                while (x <= fieldsx - 2 && y <= fieldsy - 2) {
-                    x = x + 2;
-                    y = y + 2;
-                }
-                while (x >= 0 && y >= 0) {
-                    if (fields[y][x] == colour) {
-                        n++;
-                    } else {
-                        n = 0;
-                    }
-                    if (n == 4) {
-                        p("Es gibt einen Sieger");
-                        win = true;
-                        break;
-                    }
-                    x = x - 2;
-                    y = y - 2;
-                }
-            }
-//end check win
-// control for the possibility of win
-            // y=0
-            if (!win) {
-                y = 0;
-                for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
-                    first = "none";
+            /**
+             * check if there are 4 in a row
+             * controll win
+             */
+            if (turns >= 7) {
+                // x = width
+                if (height <= fieldsy - (3 * 2)) {
                     n = 0;
-                    for (x = w; x <= w + (3 * 2); x = x + 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
-                        }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
+                    for (y = height; y <= height + (3 * 2); y = y + 2) {
+                        if (f.get(width, y) == color) {
                             n++;
                         } else {
                             break;
                         }
                     }
                     if (n == 4) {
-                        break;
+                        p(playername + " hat gewonnen.");
+                        win = true;
                     }
                 }
-            }
-            if (!win && n != 4) {
-                // x=variabel
-                for (x = 0; x <= fieldsx; x = x + 2) {
-                    first = "none";
+
+                // y = height
+                if (!win) {
                     n = 0;
-                    for (y = 0; y <= 3 * 2; y = y + 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
-                        }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
+                    for (x = width - (3 * 2); x <= width + (3 * 2); x = x + 2) {
+                        if (f.get(x, height) == color) {
                             n++;
                         } else {
+                            n = 0;
+                        }
+                        if (n == 4) {
+                            p(playername + " hat gewonnen.");
+                            win = true;
                             break;
                         }
                     }
-                    if (n == 4) {
-                        break;
-                    }
                 }
-            }
-            if (!win && n != 4) {
-                // -x
-                for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
-                    y = 0;
-                    first = "none";
-                    n = 0;
-                    for (x = w; x <= w + (3 * 2); x = x + 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
-                        }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
-                            n++;
-                        } else {
-                            break;
-                        }
-                        y = y + 2;
-                    }
-                    if (n == 4) {
-                        break;
-                    }
-                }
-            }
-            if (!win && n != 4) {
+
                 // x
-                for (w = fieldsx; w >= 0 + (3 * 2); w = w - 2) {
-                    y = 0;
-                    first = "none";
+                if (!win) {
+                    x = width;
+                    y = height;
                     n = 0;
-                    for (x = w; x >= w - (3 * 2); x = x - 2) {
-                        if (first == "none" && fields[y][x] != " ") {
-                            first = fields[y][x];
-                        }
-                        if (fields[y][x] == " " || fields[y][x] == first) {
-                            n++;
-                        } else {
-                            break;
-                        }
+                    while (x >= 0 + 2 && y <= fieldsy - 2) {
+                        x = x - 2;
                         y = y + 2;
                     }
-                    if (n == 4) {
-                        break;
+                    while (x <= fieldsx && y >= 0) {
+                        if (f.get(x, y) == color) {
+                            n++;
+                        } else {
+                            n = 0;
+                        }
+                        if (n == 4) {
+                            p(playername + " hat gewonnen.");
+                            win = true;
+                            break;
+                        }
+                        x = x + 2;
+                        y = y - 2;
+                    }
+                }
+
+                // -x
+                if (!win) {
+                    x = width;
+                    y = height;
+                    n = 0;
+                    while (x <= fieldsx - 2 && y <= fieldsy - 2) {
+                        x = x + 2;
+                        y = y + 2;
+                    }
+                    while (x >= 0 && y >= 0) {
+                        if (f.get(x, y) == color) {
+                            n++;
+                        } else {
+                            n = 0;
+                        }
+                        if (n == 4) {
+                            p(playername + " hat gewonnen.");
+                            win = true;
+                            break;
+                        }
+                        x = x - 2;
+                        y = y - 2;
                     }
                 }
             }
-            if (n != 4) {
-                p("Es gibt keine MÃ¶glichkeit mehr um zu gewinnen");
-                abr = true;
+
+            /**
+             * possibile win if 4 can be placed in a row 
+             * in future method needs upgrade
+             */
+            if (allowed) {
+
+                /**
+                 * check hozizontal for the fist 2 rows
+                 */
+                if (!win) {
+                    for (y = 0; y <= 2; y = y + 2) {
+                        for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
+                            first = 't';
+                            n = 0;
+                            for (x = w; x <= w + (3 * 2); x = x + 2) {
+                                if (first == 't' && f.get(x, y) != ' ') {
+                                    first = f.get(x, y);
+                                }
+                                if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                    n++;
+                                } else {
+                                    break;
+                                }
+                            }
+                            if (n == 4) {
+                                break;
+                            }
+                        }
+                        if (n == 4) {
+                            break;
+                        }
+                    }
+                }
+
+                /**
+                 * x = variabel 
+                 * check for every vertikal row only for the first 4
+                 */
+                if (!win && n != 4) {
+                    for (x = 0; x <= fieldsx; x = x + 2) {
+                        first = 't';
+                        n = 0;
+                        for (y = 0; y <= 3 * 2; y = y + 2) {
+                            if (first == 't' && f.get(x, y) != ' ') {
+                                first = f.get(x, y);
+                            }
+                            if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                n++;
+                            } else {
+                                break;
+                            }
+                        }
+                        if (n == 4) {
+                            break;
+                        }
+                    }
+                }
+
+                /**
+                 * -x 
+                 * check for 2 diagonal row
+                 */
+                if (!win && n != 4) {
+                    for (z = 0; z <= 2 && z <= fieldsy - (3 * 2); z = z + 2) {
+                        for (w = 0; w <= fieldsx - (3 * 2); w = w + 2) {
+                            y = z;
+                            first = 't';
+                            n = 0;
+                            for (x = w; x <= w + (3 * 2); x = x + 2) {
+                                if (first == 't' && f.get(x, y) != ' ') {
+                                    first = f.get(x, y);
+                                }
+                                if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                    n++;
+                                } else {
+                                    break;
+                                }
+                                y = y + 2;
+                            }
+                            if (n == 4) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                /**
+                 * x
+                 * check for 2 diagonal row
+                 */
+                if (!win && n != 4) {
+                    for (z = 0; z <= 2 && z <= fieldsy - (3 * 2); z = z + 2) {
+                        for (w = fieldsx; w >= 0 + (3 * 2); w = w - 2) {
+                            y = z;
+                            first = 't';
+                            n = 0;
+                            for (x = w; x >= w - (3 * 2); x = x - 2) {
+                                if (first == 't' && f.get(x, y) != ' ') {
+                                    first = f.get(x, y);
+                                }
+                                if (f.get(x, y) == ' ' || f.get(x, y) == first) {
+                                    n++;
+                                } else {
+                                    break;
+                                }
+                                y = y + 2;
+                            }
+                            if (n == 4) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                /**
+                 * end game
+                 * or continue until full
+                 */
+                if (n != 4) {
+                    p("Spätestens jetzt besteht keine  Möglichkeit mehr zu gewinnen.");
+                    do {
+                        p("Wollen Sie dennoch weiterspielen? (1 für ja / 2 für nein)");
+                        play = input.nextInt();
+                    } while (play < 1 || play > 2);
+                    if (play == 1) {
+                        allowed = false;
+                    } else {
+                        stop = true;
+                    }
+                }
             }
-//end check possibility of win
-//switch players
+            /**
+             * check if the field is full
+             */
+            if (!allowed && turns == fieldsP) {
+                full = true;
+                p("Das Feld ist voll.");
+            }
+
+            /**
+             * switch players
+             */
             player = !player;
         }
-
     }
 }
