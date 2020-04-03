@@ -6,7 +6,7 @@ import printing.PrintingGame;
 public class Connectfour extends PrintingGame {
 
     public Connectfour() {
-        super("4-gewinnt");
+        super("4 Gewinnt");
     }
 
     @Override
@@ -27,10 +27,10 @@ public class Connectfour extends PrintingGame {
          * loop until size is 4x4 or higher
          */
         do {
-            p("Wieviele Felder wollen Sie in X-Richtung?");
+            p("Wie viele Felder wollen Sie in X-Richtung?");
             p("(Die Zahlen werden nur bis 9 gelistet)");
             fieldsx = input.nextInt();
-            p("Wieviele Felder wollen Sie in Y-Richtung?");
+            p("Wie viele Felder wollen Sie in Y-Richtung?");
             fieldsy = input.nextInt();
             if (fieldsx < 4 || fieldsy < 4) {
                 p("Bitte wählen Sie mindestens 4x4!");
@@ -38,7 +38,7 @@ public class Connectfour extends PrintingGame {
         } while (fieldsx < 4 || fieldsy < 4);
 
         /**
-         * multiplicate to find the max on fields
+         * multiplicate to find the max of fields
          */
         fieldsP = fieldsy * fieldsx;
 
