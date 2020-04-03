@@ -26,7 +26,7 @@ public class TTT extends PrintingGame {
          * including the numbers one to nine 
         */
         
-        p("Das Spiel ist wiefolgt aufgebaut:");
+        p("Das Spiel ist wie folgt aufgebaut:");
         
         /**
          * set the Charfield
