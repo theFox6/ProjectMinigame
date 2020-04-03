@@ -15,7 +15,7 @@ public class TTT extends PrintingGame {
         /**
          * deklaration and initialization
         */
-        int field = 0, y, x, n,RADIX, rounds = 0;
+        int field = 0, y, x, n,RADIX, turns = 0;
         char XO = ' ',ch;
         boolean win = false, player = true, switching = true, full = false;
         CharField f = new CharField();
@@ -26,7 +26,7 @@ public class TTT extends PrintingGame {
          * including the numbers one to nine 
         */
         
-        p("Das Spiel ist wiefolgt aufgebaut:");
+        p("Das Spiel ist wie folgt aufgebaut:");
         
         /**
          * set the Charfield
@@ -66,7 +66,7 @@ public class TTT extends PrintingGame {
         }
 
         /**
-         * printing the Charfield
+         * show the Charfield
          */
         p(f.toString(0, 0, 5, 5));
         
@@ -85,7 +85,7 @@ public class TTT extends PrintingGame {
          * loop as long as no win and not full
          */
         while (!win && !full) {
-            rounds++;
+            turns++;
             
          /**
          * loop until switching stays true
@@ -146,9 +146,9 @@ public class TTT extends PrintingGame {
             
            /**
             * check if there are three equal symols ihe same row
-            * only after 4 rounds
+            * only after 4 turns
             */
-           if (rounds >=5){
+           if (turns >=5){
            // vertikal
             for (x = 0; x <= 4; x = x + 2) {
                 if (f.get(x, 0) == f.get(x, 2) && f.get(x, 0) == f.get(x, 4) && f.get(x, 0) != ' ') {
@@ -177,7 +177,7 @@ public class TTT extends PrintingGame {
             /**
              * check if there is another possibility to set
              */
-            if (!win && rounds == 9) {
+            if (!win && turns == 9) {
                 full = true;   
                 p("Es gibt keinen Sieger.");
             }
